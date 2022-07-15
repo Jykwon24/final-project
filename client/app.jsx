@@ -1,6 +1,8 @@
 import React/* { useState, useEffect } */from 'react';
 import Week from './pages/day';
 import Header from './components/header';
+import PageView from './pages/page-content';
+import Navbar from './components/navbar';
 // import { parseRoute } from './lib';
 
 // export default class App extends React.Component {
@@ -31,6 +33,8 @@ const App = () => {
     <>
       <Header />
       <Week />
+      <PageView />
+      <Navbar />
     </>
   );
 };

@@ -9,3 +9,8 @@
 .font-size {
   font-size: 0.8rem;
 }
+
+.nav-bar-style {
+  margin: auto;
+  width: 60%;
+}
