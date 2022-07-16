@@ -1,9 +1,13 @@
 import React from 'react';
 
-export default function Header(props) {
+export default function Header() {
   return (
    <div>
-     <h1>Fit Track</h1>
+     <div>
+        <h1 className='d-inline pt-2 ms-4'>Fit Track</h1>
+        <i className="fa-solid fa-dumbbell"></i>
+        <hr />
+     </div>
    </div>
   );
 }

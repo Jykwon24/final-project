@@ -12,16 +12,20 @@ const days = [
 
 export default function Week() {
   return (
-    <div className='row row-cols-7 text-center week-style'>
-      {
-        days.map((day, index) => (
-          <a key={index}
-             href={day.name}
-             className={day.active ? 'dg-background col text-white text-decoration-none font-size' : 'col text-black text-decoration-none font-size'}>
-            {day.name}
-          </a>
-        ))
-      }
+    <div className='container'>
+      <div className='row text-center week-style'>
+        {
+          days.map((day, index) => (
+            <a key={index}
+              href={day.name}
+              className={day.active ? 'dg-background col text-white text-decoration-none font-size' : 'col text-black text-decoration-none font-size'}>
+              {day.name}
+            </a>
+          ))
+        }
+      </div>
+
     </div>
+
   );
 }
