@@ -1,0 +1,27 @@
+.dg-background {
+  background-color: rgb(67, 80, 85);
+}
+
+.week-style {
+  height: 2rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.page-style {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.font-size {
+  font-size: 0.8rem;
+}
+
+.nav-bar-style {
+  margin: auto;
+  width: 60%;
+}
+
+.nav-bar {
+  height: 2.5rem;
+}
