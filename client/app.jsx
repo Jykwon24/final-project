@@ -22,25 +22,7 @@ const App = () => {
     if (route.path === '') {
       return <Planner />;
     }
-    if (route.path === '1') {
-      return <Planner />;
-    }
-    if (route.path === '2') {
-      return <Planner />;
-    }
-    if (route.path === '3') {
-      return <Planner />;
-    }
-    if (route.path === '4') {
-      return <Planner />;
-    }
-    if (route.path === '5') {
-      return <Planner />;
-    }
-    if (route.path === '6') {
-      return <Planner />;
-    }
-    if (route.path === '7') {
+    if (route.path <= '7') {
       return <Planner />;
     }
     if (route.path === 'calories') {
