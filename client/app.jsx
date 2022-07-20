@@ -1,40 +1,49 @@
-import React/* { useState, useEffect } */from 'react';
-import Week from './pages/day';
+import React, { useState, useEffect } from 'react';
+import Schedule from './components/schedule';
 import Header from './components/header';
-import PageView from './pages/page-content';
+import PageContent from './components/page-content';
 import Navbar from './components/navbar';
-// import { parseRoute } from './lib';
-
-// export default class App extends React.Component {
-//   render() {
-//     return <Home />;
-//   }
-// }
+import Planner from './pages/planner';
+import { Calories } from './pages/calories';
+import { Stopwatch } from './pages/stopwatch';
+import { AddWorkout } from './pages/add-workout';
+import { parseRoute } from './lib';
 
 const App = () => {
-  // const [route, setRoute] = useState(parseRoute(window.location.hash));
+  const [route, setRoute] = useState(parseRoute(window.location.hash));
 
-  // useEffect(() => {
-  //   window.addEventListener('hashchange', event => {
-  //     setRoute(parseRoute(window.location.hash));
-  //   });
-  // });
+  useEffect(() => {
+    window.addEventListener('hashchange', event => {
+      setRoute(parseRoute(window.location.hash));
+    });
+  });
 
-  // const renderPage = () => {
-  //   if (route.path === 'page1') {
-  //     return <Home />;
-  //   }
-  //   if (route.path === 'page2') {
-  //     return <CurrentDay />;
-  //   }
-  // };
+  const renderPage = () => {
+    if (route.path === '') {
+      return <Planner />;
+    }
+    if (route.path <= '7') {
+      return <Planner />;
+    }
+    if (route.path === 'calories') {
+      return <Calories />;
+    }
+    if (route.path === 'stopwatch') {
+      return <Stopwatch />;
+    }
+    if (route.path === 'workouts') {
+      return <AddWorkout />;
+    }
+  };
 
   return (
     <>
       <Header />
-      <Week />
-      <PageView />
-      <Navbar />
+        <Schedule />
+          <PageContent>
+            {renderPage()}
+          </PageContent>
+            <Navbar />
     </>
   );
 };

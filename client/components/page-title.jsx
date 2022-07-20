@@ -1,0 +1,33 @@
+import React from 'react';
+
+export const PageTitle = () => {
+
+  const hashRoute = window.location.hash;
+
+  if (hashRoute === '#stopwatch') {
+    return (
+            <div className='dg-background d-flex justify-content-center align-items-center text-white page-style'>
+              <p className='mt-2 mb-2'>Stopwatch:</p>
+            </div>
+    );
+  } else if (hashRoute === '#calories') {
+    return (
+            <div className='dg-background d-flex justify-content-center align-items-center text-white page-style'>
+              <p className='mt-2 mb-2'>Calories:</p>
+            </div>
+    );
+  } else if (hashRoute === '#workouts') {
+    return (
+            <div className='dg-background d-flex justify-content-center align-items-center text-white page-style'>
+              <p className='mt-2 mb-2'>Add or Create Workout:</p>
+            </div>
+    );
+  } else {
+    return (
+            <div className='dg-background d-flex justify-content-around align-items-center text-white page-style'>
+              <p className='mt-2 mb-2'>Exercise:</p>
+              <p className='mt-2 mb-2'>Sets/Reps:</p>
+            </div>
+    );
+  }
+};
