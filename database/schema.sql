@@ -58,6 +58,7 @@ CREATE TABLE "dates" (
 
 CREATE TABLE "defaultExercises" (
 	"defaultExerciseId" serial NOT NULL,
+  "bodyPart" TEXT NOT NULL,
 	"name" TEXT NOT NULL,
 	"details" TEXT NOT NULL,
 	CONSTRAINT "defaultExercises_pk" PRIMARY KEY ("defaultExerciseId")
