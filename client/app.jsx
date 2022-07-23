@@ -11,7 +11,6 @@ import { parseRoute } from './lib';
 
 const App = () => {
   const [route, setRoute] = useState(parseRoute(window.location.hash));
-  // const [defaultWorkouts, setDefaulWorkouts] = useState([]);
 
   useEffect(() => {
     window.addEventListener('hashchange', event => {

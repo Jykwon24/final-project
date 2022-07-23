@@ -3,6 +3,11 @@ import { CustomWorkoutForm } from './custom-workout-form';
 
 export const AddWorkout = () => {
   const [view, setView] = useState('select');
+  // const [defaultList, setList] = useState([]);
+
+  // useMemo(() => {
+  //   fetch
+  // })
 
   if (view === 'select') {
     return (
