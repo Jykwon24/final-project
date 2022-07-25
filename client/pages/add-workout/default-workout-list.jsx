@@ -40,7 +40,7 @@ const WorkoutDetails = props => {
   defaultList.forEach((element, index) => {
     if (element.bodyPart === props.bodyPart) {
       workoutDetails.push(
-        <div id='accordionDetails' className='accordion' key={element.exerciseId}>
+        <div id='accordionDetails' className='accordion' key={index}>
           <div className='accordion-item border'>
             <div className='container d-flex justify-content-around'>
               <h5 className='collapsed text-center col-6' data-bs-toggle='collapse' data-bs-target={`#collapse${index}`} aria-expanded='true' aria-controls={`collapse${index}`}>
