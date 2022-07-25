@@ -5,7 +5,7 @@ export default function Header() {
    <div>
      <div>
         <h1 className='d-inline pt-2 ms-4'>Fit Track</h1>
-        <i className="fa-solid fa-dumbbell"></i>
+        <i className="fa-solid fa-fire-flame-curved"></i>
         <hr />
      </div>
    </div>

@@ -1,7 +1,8 @@
 import React from 'react';
 const styles = {
   page: {
-    minHeight: 'calc(75vh - 3.5rem)'
+    maxHeight: 'calc(70vh - 3.5rem)',
+    overflow: 'auto'
   }
 };
 

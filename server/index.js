@@ -1,6 +1,7 @@
 require('dotenv/config');
 const path = require('path');
 const express = require('express');
+const db = require('./db');
 const errorMiddleware = require('./error-middleware');
 
 const app = express();
@@ -12,8 +13,16 @@ if (process.env.NODE_ENV === 'development') {
   app.use(express.static(publicPath));
 }
 
-app.get('/api/hello', (req, res) => {
-  res.json({ hello: 'world' });
+app.get('/api/defaultList', (req, res, next) => {
+  const sql = `
+    select "bodyPart",
+           "name",
+           "details"
+    from "defaultExercises"
+    `;
+  db.query(sql)
+    .then(result => res.json(result.rows))
+    .catch(err => next(err));
 });
 
 app.use(errorMiddleware);
