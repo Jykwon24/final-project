@@ -8,7 +8,6 @@ import { DefaultWorkoutList } from './pages/add-workout/default-workout-list';
 import { CustomWorkoutForm } from './pages/add-workout/custom-workout-form';
 import { Calories } from './pages/calories';
 import { Stopwatch } from './pages/stopwatch';
-import { AddWorkout } from './pages/add-workout/add-workout';
 import { parseRoute } from './lib';
 
 export const AppContext = createContext(null);
@@ -42,18 +41,11 @@ const App = () => {
     if (route.path === 'stopwatch') {
       return <Stopwatch />;
     }
-    if (route.path === 'workouts') {
-      return <AddWorkout />;
-    }
     if (route.path === 'default-list') {
-      return (
-        <DefaultWorkoutList list={defaultList} />
-      );
+      return <DefaultWorkoutList list={defaultList} />;
     }
     if (route.path === 'custom-workout') {
-      return (
-        <CustomWorkoutForm />
-      );
+      return <CustomWorkoutForm />;
     }
   };
 

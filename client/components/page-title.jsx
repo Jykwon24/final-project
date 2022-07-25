@@ -16,11 +16,17 @@ export const PageTitle = () => {
               <p className='mt-2 mb-2'>Calories:</p>
             </div>
     );
-  } else if (hashRoute === '#workouts') {
+  } else if (hashRoute === '#default-list') {
     return (
             <div className='dg-background d-flex justify-content-center align-items-center text-white page-style'>
-              <p className='mt-2 mb-2'>Add or Create Workout:</p>
+              <p className='mt-2 mb-2'>Add workout from provided list below:</p>
             </div>
+    );
+  } else if (hashRoute === '#custom-workout') {
+    return (
+      <div className='dg-background d-flex justify-content-center align-items-center text-white page-style'>
+        <p className='mt-2 mb-2'>Create a custom workout to add:</p>
+      </div>
     );
   } else {
     return (

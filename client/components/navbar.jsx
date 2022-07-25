@@ -14,9 +14,12 @@ export default function Navbar(props) {
        <a className='text-white' href='#calories'>
           <i className='fa-solid fa-bowl-food fs-3'></i>
        </a>
-        <a className='text-white' href='#workouts'>
+        <a className='text-white' href='#default-list'>
           <i className='fa-solid fa-circle-plus fs-3'></i>
        </a>
+        <a className='text-white' href='#custom-workout'>
+          <i className='fa-solid fa-pen fs-3'></i>
+        </a>
      </div>
    </nav>
   );
