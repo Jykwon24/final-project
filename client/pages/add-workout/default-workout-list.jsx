@@ -11,7 +11,7 @@ export const DefaultWorkoutList = props => {
   });
 
   return (
-    <div id='accordionFlush' className='accordion accordion-flush pt-3'>
+    <div id='accordionFlush' className='accordion container accordion-flush pt-3'>
         {
           workoutTitle.map((element, index) => {
             return (

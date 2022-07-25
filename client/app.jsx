@@ -61,12 +61,10 @@ const App = () => {
     <>
       <Header />
         <Schedule />
-      <AppContext.Provider value={{ route, setRoute }}>
           <PageContent>
             {renderPage()}
           </PageContent>
             <Navbar />
-      </AppContext.Provider>
     </>
   );
 };

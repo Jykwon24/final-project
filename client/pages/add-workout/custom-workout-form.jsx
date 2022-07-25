@@ -13,9 +13,11 @@ export const CustomWorkoutForm = () => {
             want to put regarding the workout!...'/>
         </div>
         <div>
+          <a href='#workouts'>
           <button>
             back
           </button>
+          </a>
           <button>
             add
           </button>
