@@ -1,16 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import Schedule from './components/schedule';
 import Header from './components/header';
 import PageContent from './components/page-content';
 import Navbar from './components/navbar';
 import Planner from './pages/planner/planner';
+import { DefaultWorkoutList } from './pages/add-workout/default-workout-list';
+import { CustomWorkoutForm } from './pages/add-workout/custom-workout-form';
 import { Calories } from './pages/calories';
 import { Stopwatch } from './pages/stopwatch';
 import { AddWorkout } from './pages/add-workout/add-workout';
 import { parseRoute } from './lib';
 
+export const AppContext = createContext(null);
+
 const App = () => {
   const [route, setRoute] = useState(parseRoute(window.location.hash));
+  const [defaultList, setWorkoutList] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/defaultList')
+      .then(res => res.json())
+      .then(workoutList => setWorkoutList(workoutList));
+  }, []);
 
   useEffect(() => {
     window.addEventListener('hashchange', event => {
@@ -34,16 +45,28 @@ const App = () => {
     if (route.path === 'workouts') {
       return <AddWorkout />;
     }
+    if (route.path === 'default-list') {
+      return (
+        <DefaultWorkoutList list={defaultList} />
+      );
+    }
+    if (route.path === 'custom-workout') {
+      return (
+        <CustomWorkoutForm />
+      );
+    }
   };
 
   return (
     <>
       <Header />
         <Schedule />
+      <AppContext.Provider value={{ route, setRoute }}>
           <PageContent>
             {renderPage()}
           </PageContent>
             <Navbar />
+      </AppContext.Provider>
     </>
   );
 };

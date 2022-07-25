@@ -1,6 +1,7 @@
 import React from 'react';
 
-export default function Navbar() {
+export default function Navbar(props) {
+
   return (
    <nav className='nav-bar-style'>
      <div className='nav-bar dg-background d-flex justify-content-between align-items-center ps-3 pe-3'>

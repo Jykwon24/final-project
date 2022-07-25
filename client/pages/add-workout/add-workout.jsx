@@ -1,35 +1,23 @@
-import React, { useState } from 'react';
-import { CustomWorkoutForm } from './custom-workout-form';
+import React from 'react';
 
-export const AddWorkout = () => {
-  const [view, setView] = useState('select');
-  // const [defaultList, setList] = useState([]);
+export const AddWorkout = props => {
 
-  // useMemo(() => {
-  //   fetch
-  // })
-
-  if (view === 'select') {
-    return (
+  return (
       <div className='container'>
         <div>
-          <button onClick={() => setView('default-list')}>
-            Add a Default Exercise from List
-          </button>
+          <a href='#default-list'>
+            <button>
+              Add a Default Exercise from List
+            </button>
+          </a>
         </div>
         <div>
-          <button onClick={() => setView('custom-workout')}>
-            Create Your Own Custom Exercise
-          </button>
+          <a href='#custom-workout'>
+            <button>
+              Create Your Own Custom Exercise
+            </button>
+          </a>
         </div>
       </div>
-    );
-  }
-
-  if (view === 'custom-workout') {
-    return (
-      <CustomWorkoutForm />
-    );
-  }
-
+  );
 };
