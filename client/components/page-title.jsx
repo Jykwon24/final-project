@@ -4,7 +4,9 @@ export const PageTitle = () => {
 
   const hashRoute = window.location.hash;
 
-  if (hashRoute === '#stopwatch') {
+  if (hashRoute === '' || hashRoute === '#sign-up' || hashRoute === '#sign-in') {
+    return null;
+  } else if (hashRoute === '#stopwatch') {
     return (
             <div className='dg-background d-flex justify-content-center align-items-center text-white page-style'>
               <p className='mt-2 mb-2'>Stopwatch:</p>

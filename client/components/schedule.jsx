@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { PageTitle } from './page-title';
+import { AppContext } from '../app';
 
 export default function Week() {
-
   const [currentDay, setActive] = useState('');
+  const { user } = useContext(AppContext);
 
   const days = [
     { id: 1, name: 'Sun', active: currentDay },
@@ -24,7 +25,8 @@ export default function Week() {
     setActive(element.id);
   };
 
-  return (
+  if (user) {
+    return (
     <>
       <div className='container'>
         <div className='row text-center week-style'>
@@ -50,5 +52,6 @@ export default function Week() {
       </div>
       <PageTitle />
     </>
-  );
+    );
+  }
 }

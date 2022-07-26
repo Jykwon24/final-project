@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AppContext } from '../../app';
+import Redirect from '../../components/redirect';
 
 export default function Planner(props) {
+
+  const { user } = useContext(AppContext);
+
+  if (!user) return <Redirect to='sign-up' />;
   return (
   // <div className='row'>
   //   <ul className='col ms-4'>exercise list</ul>

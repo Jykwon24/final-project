@@ -5,11 +5,9 @@ export const AuthForm = () => {
   // const [password, setPassword] = useState('');
 
   return (
+
     <>
       <form>
-        <div>
-          <h2>User Log In</h2>
-        </div>
         <div>
           <label htmlFor="">
             Username:
@@ -24,7 +22,7 @@ export const AuthForm = () => {
         </div>
         <div>
           <button>Register</button>
-          <a href="">First time? Sign up here</a>
+          <a href="">Already have an account?</a>
         </div>
       </form>
     </>
