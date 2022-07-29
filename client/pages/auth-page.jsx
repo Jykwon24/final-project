@@ -5,12 +5,15 @@ import { AppContext } from '../app';
 
 export const AuthPage = () => {
 
-  const { user, route } = useContext(AppContext);
-  if (user) return <Redirect to='1' />;
+  const { user, route, handleSignIn } = useContext(AppContext);
 
   const welcomeMessage = route.path === 'sign-in'
     ? 'Please sign in!'
     : 'Create an account!';
+
+  // console.log('auth form', user);
+  // console.log('inside auth', route);
+  if (user) return <Redirect to="" />;
 
   return (
     <div className='row pt-5 align-items-center'>
@@ -21,7 +24,9 @@ export const AuthPage = () => {
           </h3>
         </header>
         <div className='card'>
-          <AuthForm action={route.path}/>
+          <AuthForm
+            action={route.path}
+            onSignIn={handleSignIn}/>
         </div>
       </div>
     </div>

@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AppContext } from '../app';
 
 export const PageTitle = () => {
 
+  const { user } = useContext(AppContext);
+
   const hashRoute = window.location.hash;
 
-  if (hashRoute === '' || hashRoute === '#sign-up' || hashRoute === '#sign-in') {
+  if (!user) {
     return null;
   } else if (hashRoute === '#stopwatch') {
     return (

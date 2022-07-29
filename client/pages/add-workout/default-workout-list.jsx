@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AppContext } from '../../app';
 
 export const DefaultWorkoutList = props => {
   const defaultList = props.list;
   const workoutTitle = [];
+
+  const { handleAddWorkout, refContainer } = useContext(AppContext);
 
   defaultList.forEach(element => {
     if (workoutTitle.indexOf(element.bodyPart) === -1) {
@@ -24,7 +27,7 @@ export const DefaultWorkoutList = props => {
                     </button>
                   </div>
                   <div id={`flush-collapse${index}`} className='collapse' aria-labelledby={`flush-heading${index}`} data-parent='#accordionFlush'>
-                    <WorkoutDetails list={defaultList} bodyPart={element}/>
+                    <WorkoutDetails reference={refContainer} addWorkout={handleAddWorkout} list={defaultList} bodyPart={element}/>
                   </div>
                 </div>
             );
@@ -40,9 +43,9 @@ const WorkoutDetails = props => {
   defaultList.forEach((element, index) => {
     if (element.bodyPart === props.bodyPart) {
       workoutDetails.push(
-        <div id='accordionDetails' className='accordion' key={index}>
+        <div id='accordionDetails' className='accordion' key={index} ref={props.reference}>
           <div className='accordion-item border'>
-            <div className='container d-flex justify-content-around'>
+            <div className='container d-flex justify-content-around' onClick={props.addWorkout}>
               <h5 className='collapsed text-center col-6' data-bs-toggle='collapse' data-bs-target={`#collapse${index}`} aria-expanded='true' aria-controls={`collapse${index}`}>
                 {element.name}
               </h5>

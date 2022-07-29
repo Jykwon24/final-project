@@ -16,6 +16,8 @@ if (process.env.NODE_ENV === 'development') {
   app.use(express.static(publicPath));
 }
 
+app.use(express.json());
+
 app.get('/api/defaultList', (req, res, next) => {
   const sql = `
     select "bodyPart",
@@ -28,7 +30,7 @@ app.get('/api/defaultList', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.post('api/auth/sign-up', (req, res, next) => {
+app.post('/api/auth/sign-up', (req, res, next) => {
   const { username, password } = req.body;
   if (!username || !password) {
     throw new ClientError(400, 'username and password are required fields');
@@ -80,6 +82,24 @@ app.post('/api/auth/sign-in', (req, res, next) => {
           const token = jwt.sign(payload, process.env.TOKEN_SECRET);
           res.json({ token, user: payload });
         });
+    })
+    .catch(err => next(err));
+});
+
+app.post('/api/userList', (req, res, next) => {
+  const { userId, selectedDay, name, details } = req.body;
+  if (!selectedDay || !name || !details) {
+    throw new ClientError(401, 'required fields missing');
+  }
+  const sql = `
+    insert into "userExerciseList" ("userId", "date", "name", "details")
+    values($1, $2, $3, $4)
+    returning "userId", "exerciseId", "date", "name", "details"
+           `;
+  const params = [userId, selectedDay, name, details];
+  db.query(sql, params)
+    .then(result => {
+      // console.log(result);
     })
     .catch(err => next(err));
 });

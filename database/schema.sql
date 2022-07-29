@@ -9,7 +9,7 @@ create schema "public";
 CREATE TABLE "users" (
 	"userId" serial NOT NULL,
 	"username" TEXT NOT NULL,
-	"password" TEXT NOT NULL,
+	"hashedPassword" TEXT NOT NULL,
 	"createdAt" timestamptz NOT NULL default now(),
 	CONSTRAINT "users_pk" PRIMARY KEY ("userId")
 ) WITH (
@@ -18,11 +18,10 @@ CREATE TABLE "users" (
 
 CREATE TABLE "userExerciseList" (
 	"exerciseId" serial NOT NULL,
-	"sets" integer NOT NULL,
-	"reps" integer NOT NULL,
 	"userId" integer NOT NULL,
-	"datesId" integer NOT NULL,
-	"defaultExerciseId" integer NOT NULL,
+	"date" integer NOT NULL,
+  "name" TEXT NOT NULL,
+  "details" TEXT NOT NULL,
 	CONSTRAINT "userExerciseList_pk" PRIMARY KEY ("exerciseId")
 ) WITH (
   OIDS=FALSE
@@ -42,19 +41,6 @@ CREATE TABLE "calories" (
   OIDS=FALSE
 );
 
-CREATE TABLE "dates" (
-	"datesId" serial NOT NULL,
-	"sun" TEXT NOT NULL,
-	"mon" TEXT NOT NULL,
-	"tues" TEXT NOT NULL,
-	"wed" TEXT NOT NULL,
-	"thurs" TEXT NOT NULL,
-	"fri" TEXT NOT NULL,
-	"sat" TEXT NOT NULL,
-	CONSTRAINT "dates_pk" PRIMARY KEY ("datesId")
-) WITH (
-  OIDS=FALSE
-);
 
 CREATE TABLE "defaultExercises" (
 	"defaultExerciseId" serial NOT NULL,
@@ -67,6 +53,4 @@ CREATE TABLE "defaultExercises" (
 );
 
 ALTER TABLE "userExerciseList" ADD CONSTRAINT "userExerciseList_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
-ALTER TABLE "userExerciseList" ADD CONSTRAINT "userExerciseList_fk1" FOREIGN KEY ("datesId") REFERENCES "dates"("datesId");
-ALTER TABLE "userExerciseList" ADD CONSTRAINT "userExerciseList_fk2" FOREIGN KEY ("defaultExerciseId") REFERENCES "defaultExercises"("defaultExerciseId");
 ALTER TABLE "calories" ADD CONSTRAINT "calories_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");

@@ -5,13 +5,18 @@ import Redirect from '../../components/redirect';
 export default function Planner(props) {
 
   const { user } = useContext(AppContext);
+  // console.log('planner page', user);
 
-  if (!user) return <Redirect to='sign-up' />;
+  if (!user) {
+    return <Redirect to='sign-up' />;
+  }
+
   return (
-  // <div className='row'>
-  //   <ul className='col ms-4'>exercise list</ul>
-  //   <ul className='col text-center'>set/reps list</ul>
-  // </div>
+
+    // <div className='row'>
+    //   <ul className='col ms-4'>exercise list</ul>
+    //   <ul className='col text-center'>set/reps list</ul>
+    // </div>
     <table className='w-100'>
         <tbody className='container'>
         <tr className='row'>
@@ -29,4 +34,5 @@ export default function Planner(props) {
 
       </table>
   );
+
 }
