@@ -4,35 +4,54 @@ import Redirect from '../../components/redirect';
 
 export default function Planner(props) {
 
-  const { user } = useContext(AppContext);
+  const { user, route, userList } = useContext(AppContext);
   // console.log('planner page', user);
 
   if (!user) {
     return <Redirect to='sign-up' />;
   }
 
+  if (route.path === '') {
+    return (
+      <div>Welcome!</div>
+    );
+  }
+
+  // console.log(userList);
+  // console.log(route);
+  // const selectedDayList = [];
   return (
+    userList.map((element, index) => {
+      return (
+      <div key={index}>{element.name}</div>
+      );
 
-    // <div className='row'>
-    //   <ul className='col ms-4'>exercise list</ul>
-    //   <ul className='col text-center'>set/reps list</ul>
-    // </div>
-    <table className='w-100'>
-        <tbody className='container'>
-        <tr className='row'>
-          <td className='col ms-4'>
-            exercise list
-          </td>
-
-          <td className='col'>
-            set/reps list
-          </td>
-
-        </tr>
-
-        </tbody>
-
-      </table>
+    })
   );
+
+  // return (
+  //   <>
+  //     {selectedDayList}
+  //   </>
+  // );
+
+  // return (
+  //   <table className='w-100'>
+  //       <tbody className='container'>
+  //       <tr className='row'>
+  //         <td className='col ms-4'>
+  //           exercise list
+  //         </td>
+
+  //         <td className='col'>
+  //           set/reps list
+  //         </td>
+
+  //       </tr>
+
+  //       </tbody>
+
+  //     </table>
+  // );
 
 }

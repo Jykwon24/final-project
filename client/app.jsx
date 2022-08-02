@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext, useRef } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import Schedule from './components/schedule';
 import jwtDecode from 'jwt-decode';
 import Header from './components/header';
@@ -20,16 +20,17 @@ const App = () => {
   const [isAuthorizing, setAuth] = useState(true);
   const [route, setRoute] = useState(parseRoute(window.location.hash));
   const [defaultList, setWorkoutList] = useState([]);
-  // const [userList, setUserList] = useState([]);
+  const [userList, setUserList] = useState([]);
   // const [listForDay, setListForDay] = useState({ day: 1, name: '', details: '' });
 
   useEffect(() => {
-
+    // console.log('hash useeffect called');
     window.addEventListener('hashchange', () => {
-
       setRoute(parseRoute(window.location.hash));
     });
   }, []);
+
+  // console.log(user);
 
   useEffect(() => {
     fetch('/api/defaultList')
@@ -43,6 +44,12 @@ const App = () => {
     setAuth(false);
   }, []);
 
+  useEffect(() => {
+    fetch('/api/userList')
+      .then(res => res.json())
+      .then(retrievedList => setUserList(retrievedList));
+  }, []);
+
   const handleSignIn = result => {
     const { user, token } = result;
     window.localStorage.setItem('react-context-jwt', token);
@@ -54,41 +61,39 @@ const App = () => {
     setUser(null);
   };
 
-  // const handleAddWorkout = event => {
-  //   if (event.target.tagName === 'BUTTON') {
-  //     const target = event.currentTarget;
-  //     const selectedDay = day;
-  //     const name = target.firstElementChild.textContent;
-  //     const details = target.nextElementSibling.firstElementChild.textContent;
-  //     const userId = user.userId;
+  const handleAddWorkout = event => {
+    if (event.target.tagName === 'BUTTON') {
+      const target = event.currentTarget;
+      const selectedDay = day;
+      const name = target.firstElementChild.textContent;
+      const details = target.nextElementSibling.firstElementChild.textContent;
+      const userId = user.userId;
 
-  //     // console.log({
-  //     //   userId,
-  //     //   selectedDay,
-  //     //   name,
-  //     //   details
-  //     // });
+      // console.log({
+      //   user
+      // });
 
-  //     const req = {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify({ userId, selectedDay, name, details })
-  //     };
+      const req = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userId, selectedDay, name, details })
+      };
 
-  //     fetch('/api/userList/', req)
-  //       .then(res => {
-  //         if (!res.ok) {
-  //           throw new Error('No network resonse');
-  //         }
-  //         return res.json();
-  //       })
-  //       .then(result =>
-  //         // console.log(result)
-  //       );
-  //   }
-  // };
+      fetch('/api/userList/', req)
+        .then(res => {
+          if (!res.ok) {
+            throw new Error('No network resonse');
+          }
+          return res.json();
+        })
+        .then(result =>
+          // eslint-disable-next-line no-console
+          console.log('post request result', result)
+        );
+    }
+  };
 
   const renderPage = () => {
     // console.log('renderpage', route);
@@ -115,9 +120,18 @@ const App = () => {
     }
   };
 
-  const refContainer = useRef(null);
+  if (isAuthorizing) return null;
 
-  const contextValue = { user, isAuthorizing, route, handleSignIn, day, setDay, refContainer };
+  const contextValue = {
+    user,
+    day,
+    route,
+    userList,
+    setDay,
+    isAuthorizing,
+    handleSignIn,
+    handleAddWorkout
+  };
 
   return (
     <AppContext.Provider value={contextValue}>

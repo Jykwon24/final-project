@@ -86,6 +86,24 @@ app.post('/api/auth/sign-in', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/userList', (req, res, next) => {
+  // const userId = Number(req.params.userId);
+  // if (!Number.isInteger(userId) || userId < 1) {
+  //   throw new ClientError(400, 'userId must be a positive integer');
+  // }
+  const sql = `
+     select "date",
+            "name",
+            "details"
+      from "userExerciseList"
+  `;
+  db.query(sql)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
 app.post('/api/userList', (req, res, next) => {
   const { userId, selectedDay, name, details } = req.body;
   if (!selectedDay || !name || !details) {
@@ -99,7 +117,8 @@ app.post('/api/userList', (req, res, next) => {
   const params = [userId, selectedDay, name, details];
   db.query(sql, params)
     .then(result => {
-      // console.log(result);
+      // eslint-disable-next-line no-console
+      console.log('added workout from default list result:', result);
     })
     .catch(err => next(err));
 });
