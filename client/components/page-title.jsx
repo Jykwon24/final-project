@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AppContext } from '../app';
 
 export const PageTitle = () => {
 
+  const { user } = useContext(AppContext);
+
   const hashRoute = window.location.hash;
 
-  if (hashRoute === '#stopwatch') {
+  if (!user) {
+    return null;
+  } else if (hashRoute === '#stopwatch') {
     return (
             <div className='dg-background d-flex justify-content-center align-items-center text-white page-style'>
               <p className='mt-2 mb-2'>Stopwatch:</p>

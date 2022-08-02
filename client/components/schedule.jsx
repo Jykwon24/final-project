@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { PageTitle } from './page-title';
+import { AppContext } from '../app';
 
 export default function Week() {
-
-  const [currentDay, setActive] = useState('');
+  // const [currentDay, setActive] = useState('');
+  const { user, setDay, day } = useContext(AppContext);
 
   const days = [
-    { id: 1, name: 'Sun', active: currentDay },
+    { id: 1, name: 'Sun', active: day },
     { id: 2, name: 'Mon', active: '' },
     { id: 3, name: 'Tues', active: '' },
     { id: 4, name: 'Wed', active: '' },
@@ -21,27 +22,28 @@ export default function Week() {
   const deactive = 'col text-black text-decoration-none font-size';
 
   const handleClick = element => {
-    setActive(element.id);
+    setDay(element.id);
   };
 
-  return (
+  if (user) {
+    return (
     <>
       <div className='container'>
         <div className='row text-center week-style'>
           {
-            days.map(day => {
-              if (currentDay === day.id) {
+            days.map(element => {
+              if (day === element.id) {
                 currentDayDisplay = active;
               } else {
                 currentDayDisplay = deactive;
               }
               return (
-                <a key={day.id}
-                  id={day.id}
-                  href={`#${day.id}`}
-                  onClick={() => handleClick(day)}
+                <a key={element.id}
+                  id={element.id}
+                  href={`#${element.id}`}
+                  onClick={() => handleClick(element)}
                   className={currentDayDisplay}>
-                  {day.name}
+                  {element.name}
                 </a>
               );
             })
@@ -50,5 +52,6 @@ export default function Week() {
       </div>
       <PageTitle />
     </>
-  );
+    );
+  }
 }
