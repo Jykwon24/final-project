@@ -39,7 +39,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const token = window.localStorage.getItem('react-context-jwt');
+    const token = window.localStorage.getItem('user-Id');
     setUser(token ? jwtDecode(token) : null);
     setAuth(false);
   }, []);
@@ -52,12 +52,12 @@ const App = () => {
 
   const handleSignIn = result => {
     const { user, token } = result;
-    window.localStorage.setItem('react-context-jwt', token);
+    window.localStorage.setItem('user-Id', token);
     setUser(user);
   };
 
   const handleSignOut = () => {
-    window.localStorage.removeItem('react-context-jwt');
+    window.localStorage.removeItem('user-Id');
     setUser(null);
   };
 
