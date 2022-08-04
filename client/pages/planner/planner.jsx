@@ -25,18 +25,27 @@ export default function Planner(props) {
   return (
     selectedDayList.map((element, index) => {
       return (
-        <div key={index} className='accordion-item card'>
-          <div className='card-header d-flex justify-content-center text-bg-light p-2' id={`flush-heading${index}`}>
-            <button className='collapsed dg-background' data-bs-toggle='collapse' data-bs-target={`#flush-collapse${index}`} aria-expanded='true' aria-controls={`flush-collapse${index}`}>
-              <h3 className='text-white'>
-                {element.name}
-              </h3>
-            </button>
-          </div>
-          <div id={`flush-collapse${index}`} className='collapse' aria-labelledby={`flush-heading${index}`} data-parent='#accordionFlush'>
-            {element.details}
-          </div>
-        </div>
+        <table key={index} id='accordionFlush' className='accordion container accordion-flush pt-3'>
+          <tbody className='accordion-item card'>
+            <tr className='card-header d-flex justify-content-between text-bg-light' id={`flush-heading${index}`}>
+              <td className='collapsed text-black' data-bs-toggle='collapse' data-bs-target={`#flush-collapse${index}`} aria-expanded='true' aria-controls={`flush-collapse${index}`}>
+                <h5>
+                  {element.name}
+                </h5>
+              </td>
+              <td>
+                <i className='fa-solid fa-pen-to-square fs-3'></i>
+                <i className='fa-solid fa-xmark ms-2 fs-3'></i>
+              </td>
+            </tr>
+            <tr id={`flush-collapse${index}`} className='collapse' aria-labelledby={`flush-heading${index}`} data-parent='#accordionFlush'>
+             <td>
+              {element.details}
+             </td>
+            </tr>
+          </tbody>
+        </table>
+
       );
 
     })
