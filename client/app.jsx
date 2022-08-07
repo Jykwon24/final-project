@@ -69,10 +69,6 @@ const App = () => {
       const details = target.nextElementSibling.firstElementChild.textContent;
       const userId = user.userId;
 
-      // console.log({
-      //   user
-      // });
-
       const req = {
         method: 'POST',
         headers: {
@@ -84,14 +80,15 @@ const App = () => {
       fetch('/api/userList/', req)
         .then(res => {
           if (!res.ok) {
-            throw new Error('No network resonse');
+            throw new Error('No network response');
           }
           return res.json();
         })
         .then(result =>
           // eslint-disable-next-line no-console
           console.log('post request result', result)
-        );
+        )
+        .catch(err => console.error(err));
     }
   };
 
