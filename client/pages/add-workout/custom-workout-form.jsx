@@ -4,8 +4,9 @@ import { AppContext } from '../../app';
 export const CustomWorkoutForm = () => {
   const [workoutName, setWorkoutName] = useState('');
   const [details, setDetails] = useState('');
+  // const [view, setView] = useState('custom');
 
-  const { user, day } = useContext(AppContext);
+  const { user, day, setUserList, userList } = useContext(AppContext);
 
   // console.log(user.userId);
 
@@ -30,7 +31,9 @@ export const CustomWorkoutForm = () => {
         }
         return res.json();
       })
+      .then(list => setUserList([...userList, list]))
       .catch(err => console.error(err));
+
   };
 
   const handleWorkoutName = event => {
@@ -42,10 +45,6 @@ export const CustomWorkoutForm = () => {
     const { value } = event.target;
     setDetails(value);
   };
-
-  // const handleBack = () => {
-
-  // };
 
   return (
     <>
@@ -75,11 +74,6 @@ export const CustomWorkoutForm = () => {
           </textarea>
         </div>
         <div>
-          <a href='#workouts'>
-          <button>
-            back
-          </button>
-          </a>
           <button type='submit'>
             add
           </button>

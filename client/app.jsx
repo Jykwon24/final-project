@@ -30,7 +30,7 @@ const App = () => {
     });
   }, []);
 
-  // console.log(user);
+  // console.log(route);
 
   useEffect(() => {
     fetch('/api/defaultList')
@@ -42,12 +42,6 @@ const App = () => {
     const token = window.localStorage.getItem('user-Id');
     setUser(token ? jwtDecode(token) : null);
     setAuth(false);
-  }, []);
-
-  useEffect(() => {
-    fetch('/api/userList')
-      .then(res => res.json())
-      .then(retrievedList => setUserList(retrievedList));
   }, []);
 
   const handleSignIn = result => {
@@ -84,12 +78,11 @@ const App = () => {
           }
           return res.json();
         })
-        .then(result =>
-          // eslint-disable-next-line no-console
-          console.log('post request result', result)
-        )
+        .then(result => setUserList([...userList, result]))
         .catch(err => console.error(err));
+      window.location.hash = day;
     }
+
   };
 
   const renderPage = () => {
@@ -127,7 +120,10 @@ const App = () => {
     setDay,
     isAuthorizing,
     handleSignIn,
-    handleAddWorkout
+    handleAddWorkout,
+    setRoute,
+    setUserList
+
   };
 
   return (

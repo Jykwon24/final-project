@@ -1,10 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { AppContext } from '../../app';
 import Redirect from '../../components/redirect';
 
 export default function Planner(props) {
 
-  const { user, route, userList, day } = useContext(AppContext);
+  const { user, route, userList, day, setUserList } = useContext(AppContext);
+
+  useEffect(() => {
+    fetch('/api/userList')
+      .then(res => res.json())
+      .then(retrievedList => setUserList(retrievedList));
+  }, [setUserList]);
 
   if (!user) {
     return <Redirect to='sign-up' />;
