@@ -24,6 +24,12 @@ const App = () => {
   // const [listForDay, setListForDay] = useState({ day: 1, name: '', details: '' });
 
   useEffect(() => {
+    fetch('/api/userList')
+      .then(res => res.json())
+      .then(retrievedList => setUserList(retrievedList));
+  }, [setUserList]);
+
+  useEffect(() => {
     // console.log('hash useeffect called');
     window.addEventListener('hashchange', () => {
       setRoute(parseRoute(window.location.hash));
@@ -82,7 +88,6 @@ const App = () => {
         .catch(err => console.error(err));
       window.location.hash = day;
     }
-
   };
 
   const renderPage = () => {
@@ -121,9 +126,7 @@ const App = () => {
     isAuthorizing,
     handleSignIn,
     handleAddWorkout,
-    setRoute,
     setUserList
-
   };
 
   return (

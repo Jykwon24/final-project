@@ -92,7 +92,8 @@ app.get('/api/userList', (req, res, next) => {
   //   throw new ClientError(400, 'userId must be a positive integer');
   // }
   const sql = `
-     select "date",
+     select "exerciseId",
+            "date",
             "name",
             "details"
       from "userExerciseList"
@@ -104,23 +105,23 @@ app.get('/api/userList', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.get('/api/userList/:date', (req, res, next) => {
-  const day = Number(req.params.date);
-  if (!Number.isInteger(day) || day < 1) {
-    throw new ClientError(400, 'userId must be a positive integer');
-  }
-  const sql = `
-     select "date",
-            "name",
-            "details"
-      from "userExerciseList"
-  `;
-  db.query(sql)
-    .then(result => {
-      res.status(200).json(result.rows);
-    })
-    .catch(err => next(err));
-});
+// app.get('/api/userList/:date', (req, res, next) => {
+//   const day = Number(req.params.date);
+//   if (!Number.isInteger(day) || day < 1) {
+//     throw new ClientError(400, 'userId must be a positive integer');
+//   }
+//   const sql = `
+//      select "date",
+//             "name",
+//             "details"
+//       from "userExerciseList"
+//   `;
+//   db.query(sql)
+//     .then(result => {
+//       res.status(200).json(result.rows);
+//     })
+//     .catch(err => next(err));
+// });
 
 app.post('/api/userList', (req, res, next) => {
   const { userId, selectedDay, name, details } = req.body;
@@ -138,6 +139,33 @@ app.post('/api/userList', (req, res, next) => {
       res.status(201).json(result.rows);
     })
     .catch(err => next(err));
+});
+
+app.delete('/api/userList', (req, res, next) => {
+  const { exerciseId } = req.body;
+  if (!exerciseId) {
+    throw new ClientError(400, 'exerciseId missing');
+  }
+  const sql = `
+    delete from "userExerciseList"
+    where "exerciseId" = $1
+    returning *
+  `;
+  const params = [exerciseId];
+  db.query(sql, params)
+    .then(result => {
+      const exerciseArray = result.rows[0];
+      if (!exerciseArray) {
+        res.status(404).json({
+          error: 'Cannot find the exercise'
+        });
+      } else {
+        res.status(204);
+      }
+    })
+    .catch(err => {
+      console.error(err);
+    });
 });
 
 app.use(errorMiddleware);
