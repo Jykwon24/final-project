@@ -21,8 +21,12 @@ export default function Planner(props) {
   // console.log('user in planner:', user);
   // console.log('day:', day);
   // console.log('current route:', route);
+  const userListCopy = [...userList];
 
-  const selectedDayList = userList.filter(workout => workout.date === day);
+  // console.log('userList state:', userList);
+  // console.log('shallow copy of the list:', userListCopy);
+
+  const selectedDayList = userListCopy.filter(workout => workout.date === day);
 
   // console.log(selectedDayList);
 
@@ -31,13 +35,13 @@ export default function Planner(props) {
     const bodyData = { exerciseId: databaseId };
     // const exerciseIndex = event.target.id;
 
-    const deleteTargetIndex = userList.findIndex(element => element.exerciseId === Number(databaseId));
+    const deleteTargetIndex = userListCopy.findIndex(element => element.exerciseId === Number(databaseId));
 
     const currentDayTargetIndex = selectedDayList.findIndex(element => element.exerciseId === Number(databaseId));
 
-    userList.splice(deleteTargetIndex, 1);
+    userListCopy.splice(deleteTargetIndex, 1);
     selectedDayList.splice(currentDayTargetIndex, 1);
-    setUserList(userList);
+    setUserList(userListCopy);
 
     // console.log('edited list:', userList);
     // console.log(deleteTargetIndex);
