@@ -136,7 +136,32 @@ app.post('/api/userList', (req, res, next) => {
   const params = [userId, selectedDay, name, details];
   db.query(sql, params)
     .then(result => {
-      res.status(201).json(result.rows);
+      res.status(201).json(result.rows[0]);
+    })
+    .catch(err => next(err));
+});
+
+app.put('/api/userList', (req, res, next) => {
+  const { name, details, targetId } = req.body;
+  if (!targetId) {
+    throw new ClientError(400, 'exerciseId missing');
+  }
+  const sql = `
+    update "userExerciseList"
+    set "name" = $1,
+        "details" = $2
+    where "exerciseId" = $3
+    returning *
+  `;
+  const params = [name, details, targetId];
+  db.query(sql, params)
+    .then(result => {
+      const resultArr = result.rows[0];
+      if (!resultArr) {
+        throw new ClientError(404, 'Cannot find requested exercise');
+      } else {
+        res.status(200).json(resultArr);
+      }
     })
     .catch(err => next(err));
 });
@@ -163,9 +188,7 @@ app.delete('/api/userList', (req, res, next) => {
         res.status(204);
       }
     })
-    .catch(err => {
-      console.error(err);
-    });
+    .catch(err => next(err));
 });
 
 app.use(errorMiddleware);

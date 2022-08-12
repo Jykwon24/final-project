@@ -21,7 +21,8 @@ const App = () => {
   const [route, setRoute] = useState(parseRoute(window.location.hash));
   const [defaultList, setWorkoutList] = useState([]);
   const [userList, setUserList] = useState([]);
-  // const [listForDay, setListForDay] = useState({ day: 1, name: '', details: '' });
+  const [targetExercise, setTarget] = useState({ exerciseId: null, date: null, name: '', details: '' });
+  const [view, setView] = useState('custom');
 
   useEffect(() => {
     fetch('/api/userList')
@@ -61,6 +62,8 @@ const App = () => {
     setUser(null);
   };
 
+  const userListCopy = [...userList];
+
   const handleAddWorkout = event => {
     if (event.target.tagName === 'BUTTON') {
       const target = event.currentTarget;
@@ -84,10 +87,26 @@ const App = () => {
           }
           return res.json();
         })
-        .then(result => setUserList([...userList, result]))
+        .then(result => setUserList([...userListCopy, result]))
         .catch(err => console.error(err));
       window.location.hash = day;
     }
+  };
+
+  // console.log('userList:', userList);
+
+  const updateTarget = event => {
+    const databaseId = event.currentTarget.getAttribute('exerciseid');
+
+    // console.log('shallow copy of list:', userListCopy);
+    // console.log('exercise iD in databes:', databaseId);
+
+    const editTargetIndex = userListCopy.findIndex(element => element.exerciseId === Number(databaseId));
+    // console.log(userListCopy[editTargetIndex]);
+    setTarget(userListCopy[editTargetIndex]);
+    setView('update');
+
+    window.location.hash = 'custom-workout';
   };
 
   const renderPage = () => {
@@ -122,10 +141,15 @@ const App = () => {
     day,
     route,
     userList,
+    view,
+    setView,
     setDay,
     isAuthorizing,
     handleSignIn,
     handleAddWorkout,
+    updateTarget,
+    targetExercise,
+    setTarget,
     setUserList
   };
 

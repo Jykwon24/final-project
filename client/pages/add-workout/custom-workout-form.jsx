@@ -4,11 +4,10 @@ import { AppContext } from '../../app';
 export const CustomWorkoutForm = () => {
   const [workoutName, setWorkoutName] = useState('');
   const [details, setDetails] = useState('');
-  // const [view, setView] = useState('custom');
 
-  const { user, day, setUserList, userList } = useContext(AppContext);
+  const { user, day, setUserList, userList, targetExercise, view } = useContext(AppContext);
 
-  // console.log(user.userId);
+  const userListCopy = [...userList];
 
   const customSubmit = event => {
     event.preventDefault();
@@ -31,10 +30,56 @@ export const CustomWorkoutForm = () => {
         }
         return res.json();
       })
-      .then(list => setUserList([...userList, list]))
+      .then(list => [...userListCopy, list])
+      .then(result => setUserList(result))
       .catch(err => console.error(err));
 
+    window.location.hash = day;
   };
+
+  // console.log('in workout form:', targetExercise);
+
+  const handleUpdate = event => {
+    event.preventDefault();
+    const name = workoutName;
+    // const userId = user.userId;
+    const targetId = targetExercise.exerciseId;
+    const targetWorkoutIndex = userListCopy.findIndex(element => element.exerciseId === Number(targetExercise.exerciseId));
+    // console.log('index of selected workout:', targetWorkoutIndex);
+
+    const req = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ targetId, name, details })
+    };
+
+    if (name && details) {
+      req.body = JSON.stringify({ targetId, name, details });
+    } else if (name) {
+      const details = targetExercise.details;
+      req.body = JSON.stringify({ targetId, name, details });
+    } else if (details) {
+      const name = targetExercise.name;
+      req.body = JSON.stringify({ targetId, name, details });
+    }
+
+    fetch('/api/userList', req)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('No network response');
+        }
+        return res.json();
+      })
+      .then(result => userListCopy.splice(targetWorkoutIndex, 1, result))
+      .then(result => setUserList(userListCopy))
+      .catch(err => console.error(err));
+
+    window.location.hash = day;
+  };
+
+  // userListCopy[targetWorkoutIndex] = result
 
   const handleWorkoutName = event => {
     const { value } = event.target;
@@ -46,10 +91,18 @@ export const CustomWorkoutForm = () => {
     setDetails(value);
   };
 
+  const alternateActionText = targetExercise.date === null
+    ? 'Create your own workout:'
+    : 'Edit below:';
+
+  const alternateSubmitAction = view === 'custom'
+    ? customSubmit
+    : handleUpdate;
+
   return (
     <>
-      <form className='w-100' onSubmit={customSubmit}>
-        <h3>Create your own:</h3>
+      <form className='w-100' onSubmit={alternateSubmitAction}>
+        <h3>{alternateActionText}</h3>
         <div>
           <input
             required
@@ -59,6 +112,7 @@ export const CustomWorkoutForm = () => {
             type='text'
             placeholder='Workout Name...'
             className='mb-2'
+            defaultValue={targetExercise.name}
             onChange={handleWorkoutName}/>
         </div>
         <div className='h-100'>
@@ -70,13 +124,19 @@ export const CustomWorkoutForm = () => {
             placeholder='Workout details, instructions, anything you
             want to put regarding the workout!...'
             className='w-100 mh-75'
+            defaultValue={targetExercise.details}
             onChange={handleDetails}>
           </textarea>
         </div>
         <div>
-          <button type='submit'>
-            add
-          </button>
+         {
+          view === 'custom'
+            ? <button type='submit'>Add workout</button>
+            : <>
+                <button type='submit'> Update workout </button>
+                <button> Back </button>
+            </>
+            }
         </div>
       </form>
     </>

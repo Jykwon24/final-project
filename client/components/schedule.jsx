@@ -4,7 +4,7 @@ import { AppContext } from '../app';
 
 export default function Week() {
   // const [currentDay, setActive] = useState('');
-  const { user, setDay, day } = useContext(AppContext);
+  const { user, setDay, day, setTarget } = useContext(AppContext);
 
   const days = [
     { id: 1, name: 'Sun', active: day },
@@ -23,6 +23,7 @@ export default function Week() {
 
   const handleClick = element => {
     setDay(element.id);
+    setTarget({ exerciseId: null, date: null, name: '', details: '' });
   };
 
   if (user) {
