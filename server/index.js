@@ -26,7 +26,7 @@ app.get('/api/defaultList', (req, res, next) => {
     from "defaultExercises"
     `;
   db.query(sql)
-    .then(result => res.json(result.rows))
+    .then(result => res.status(200).json(result.rows))
     .catch(err => next(err));
 });
 
@@ -92,17 +92,36 @@ app.get('/api/userList', (req, res, next) => {
   //   throw new ClientError(400, 'userId must be a positive integer');
   // }
   const sql = `
-     select "date",
+     select "exerciseId",
+            "date",
             "name",
             "details"
       from "userExerciseList"
   `;
   db.query(sql)
     .then(result => {
-      res.json(result.rows);
+      res.status(200).json(result.rows);
     })
     .catch(err => next(err));
 });
+
+// app.get('/api/userList/:date', (req, res, next) => {
+//   const day = Number(req.params.date);
+//   if (!Number.isInteger(day) || day < 1) {
+//     throw new ClientError(400, 'userId must be a positive integer');
+//   }
+//   const sql = `
+//      select "date",
+//             "name",
+//             "details"
+//       from "userExerciseList"
+//   `;
+//   db.query(sql)
+//     .then(result => {
+//       res.status(200).json(result.rows);
+//     })
+//     .catch(err => next(err));
+// });
 
 app.post('/api/userList', (req, res, next) => {
   const { userId, selectedDay, name, details } = req.body;
@@ -117,8 +136,57 @@ app.post('/api/userList', (req, res, next) => {
   const params = [userId, selectedDay, name, details];
   db.query(sql, params)
     .then(result => {
-      // eslint-disable-next-line no-console
-      console.log('added workout from default list result:', result);
+      res.status(201).json(result.rows[0]);
+    })
+    .catch(err => next(err));
+});
+
+app.put('/api/userList', (req, res, next) => {
+  const { name, details, targetId } = req.body;
+  if (!targetId) {
+    throw new ClientError(400, 'exerciseId missing');
+  }
+  const sql = `
+    update "userExerciseList"
+    set "name" = $1,
+        "details" = $2
+    where "exerciseId" = $3
+    returning *
+  `;
+  const params = [name, details, targetId];
+  db.query(sql, params)
+    .then(result => {
+      const resultArr = result.rows[0];
+      if (!resultArr) {
+        throw new ClientError(404, 'Cannot find requested exercise');
+      } else {
+        res.status(200).json(resultArr);
+      }
+    })
+    .catch(err => next(err));
+});
+
+app.delete('/api/userList', (req, res, next) => {
+  const { exerciseId } = req.body;
+  if (!exerciseId) {
+    throw new ClientError(400, 'exerciseId missing');
+  }
+  const sql = `
+    delete from "userExerciseList"
+    where "exerciseId" = $1
+    returning *
+  `;
+  const params = [exerciseId];
+  db.query(sql, params)
+    .then(result => {
+      const exerciseArray = result.rows[0];
+      if (!exerciseArray) {
+        res.status(404).json({
+          error: 'Cannot find the exercise'
+        });
+      } else {
+        res.status(204);
+      }
     })
     .catch(err => next(err));
 });

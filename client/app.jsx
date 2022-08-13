@@ -21,7 +21,14 @@ const App = () => {
   const [route, setRoute] = useState(parseRoute(window.location.hash));
   const [defaultList, setWorkoutList] = useState([]);
   const [userList, setUserList] = useState([]);
-  // const [listForDay, setListForDay] = useState({ day: 1, name: '', details: '' });
+  const [targetExercise, setTarget] = useState({ exerciseId: null, date: null, name: '', details: '' });
+  const [view, setView] = useState('custom');
+
+  useEffect(() => {
+    fetch('/api/userList')
+      .then(res => res.json())
+      .then(retrievedList => setUserList(retrievedList));
+  }, [setUserList]);
 
   useEffect(() => {
     // console.log('hash useeffect called');
@@ -30,7 +37,7 @@ const App = () => {
     });
   }, []);
 
-  // console.log(user);
+  // console.log(route);
 
   useEffect(() => {
     fetch('/api/defaultList')
@@ -44,12 +51,6 @@ const App = () => {
     setAuth(false);
   }, []);
 
-  useEffect(() => {
-    fetch('/api/userList')
-      .then(res => res.json())
-      .then(retrievedList => setUserList(retrievedList));
-  }, []);
-
   const handleSignIn = result => {
     const { user, token } = result;
     window.localStorage.setItem('user-Id', token);
@@ -61,6 +62,8 @@ const App = () => {
     setUser(null);
   };
 
+  const userListCopy = [...userList];
+
   const handleAddWorkout = event => {
     if (event.target.tagName === 'BUTTON') {
       const target = event.currentTarget;
@@ -68,10 +71,6 @@ const App = () => {
       const name = target.firstElementChild.textContent;
       const details = target.nextElementSibling.firstElementChild.textContent;
       const userId = user.userId;
-
-      // console.log({
-      //   user
-      // });
 
       const req = {
         method: 'POST',
@@ -84,15 +83,30 @@ const App = () => {
       fetch('/api/userList/', req)
         .then(res => {
           if (!res.ok) {
-            throw new Error('No network resonse');
+            throw new Error('No network response');
           }
           return res.json();
         })
-        .then(result =>
-          // eslint-disable-next-line no-console
-          console.log('post request result', result)
-        );
+        .then(result => setUserList([...userListCopy, result]))
+        .catch(err => console.error(err));
+      window.location.hash = day;
     }
+  };
+
+  // console.log('userList:', userList);
+
+  const updateTarget = event => {
+    const databaseId = event.currentTarget.getAttribute('exerciseid');
+
+    // console.log('shallow copy of list:', userListCopy);
+    // console.log('exercise iD in databes:', databaseId);
+
+    const editTargetIndex = userListCopy.findIndex(element => element.exerciseId === Number(databaseId));
+    // console.log(userListCopy[editTargetIndex]);
+    setTarget(userListCopy[editTargetIndex]);
+    setView('update');
+
+    window.location.hash = 'custom-workout';
   };
 
   const renderPage = () => {
@@ -127,10 +141,16 @@ const App = () => {
     day,
     route,
     userList,
+    view,
+    setView,
     setDay,
     isAuthorizing,
     handleSignIn,
-    handleAddWorkout
+    handleAddWorkout,
+    updateTarget,
+    targetExercise,
+    setTarget,
+    setUserList
   };
 
   return (

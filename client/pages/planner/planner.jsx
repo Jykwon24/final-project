@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { AppContext } from '../../app';
 import Redirect from '../../components/redirect';
 
 export default function Planner(props) {
+  const [clicked, setClick] = useState(false);
 
-  const { user, route, userList, day } = useContext(AppContext);
+  const { user, route, userList, setUserList, day, updateTarget } = useContext(AppContext);
 
   if (!user) {
     return <Redirect to='sign-up' />;
@@ -16,70 +17,67 @@ export default function Planner(props) {
     );
   }
 
-  // console.log('user list in side planner comp:', userList);
-  // console.log('user in planner:', user);
-  // console.log('day:', day);
-  // console.log('current route:', route);
-  const selectedDayList = userList.filter(workout => workout.date === day);
+  const userListCopy = [...userList];
+
+  const selectedDayList = userListCopy.filter(workout => workout.date === day);
+
+  const handleDelete = event => {
+    const databaseId = event.currentTarget.getAttribute('exerciseid');
+    const bodyData = { exerciseId: databaseId };
+    const deleteTargetIndex = userListCopy.findIndex(element => element.exerciseId === Number(databaseId));
+    const currentDayTargetIndex = selectedDayList.findIndex(element => element.exerciseId === Number(databaseId));
+
+    userListCopy.splice(deleteTargetIndex, 1);
+    selectedDayList.splice(currentDayTargetIndex, 1);
+    setUserList(userListCopy);
+
+    const req = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(bodyData)
+    };
+
+    fetch('/api/userList', req)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('No network response');
+        }
+        return res.json();
+      })
+      .catch(err => console.error(err));
+
+    setClick(!clicked);
+  };
 
   return (
     selectedDayList.map((element, index) => {
       return (
-        <table key={index} id='accordionFlush' className='accordion container accordion-flush pt-3'>
-          <tbody className='accordion-item card'>
-            <tr className='card-header d-flex justify-content-between text-bg-light' id={`flush-heading${index}`}>
-              <td className='collapsed text-black' data-bs-toggle='collapse' data-bs-target={`#flush-collapse${index}`} aria-expanded='true' aria-controls={`flush-collapse${index}`}>
+        <div key={index} id='accordionFlush' className='accordion container accordion-flush'>
+          <div className='accordion-item card'>
+            <div className='d-flex justify-content-between' id={`flush-heading${index}`} >
+              <div className='collapsed text-black flex-fill card-header' data-bs-toggle='collapse' data-bs-target={`#flush-collapse${index}`} aria-expanded='true' aria-controls={`flush-collapse${index}`}>
                 <h5>
                   {element.name}
                 </h5>
-              </td>
-              <td>
-                <i className='fa-solid fa-pen-to-square fs-3'></i>
-                <i className='fa-solid fa-xmark ms-2 fs-3'></i>
-              </td>
-            </tr>
-            <tr id={`flush-collapse${index}`} className='collapse' aria-labelledby={`flush-heading${index}`} data-parent='#accordionFlush'>
-             <td>
+              </div>
+              <div className='card-header'>
+                <i id={index} exerciseid={element.exerciseId} onClick={updateTarget} className='fa-solid fa-pen-to-square fs-3'></i>
+                <i id={index} exerciseid={element.exerciseId} onClick={handleDelete} className='fa-solid fa-xmark ms-2 fs-3'></i>
+              </div>
+            </div>
+            <div id={`flush-collapse${index}`} className='collapse' aria-labelledby={`flush-heading${index}`} data-parent='#accordionFlush'>
+             <div>
               {element.details}
-             </td>
-            </tr>
-          </tbody>
-        </table>
+             </div>
+            </div>
+          </div>
+        </div>
 
       );
 
     })
   );
-
-  // const WorkoutDetails = props => {
-  //   const selectedDayList = userList.filter(workout => workout.date === day);
-  //   selectedDayList.map()
-
-  // };
-
-  // return (
-  //   <>
-  //     {selectedDayList}
-  //   </>
-  // );
-
-  // return (
-  //   <table className='w-100'>
-  //       <tbody className='container'>
-  //       <tr className='row'>
-  //         <td className='col ms-4'>
-  //           exercise list
-  //         </td>
-
-  //         <td className='col'>
-  //           set/reps list
-  //         </td>
-
-  //       </tr>
-
-  //       </tbody>
-
-  //     </table>
-  // );
 
 }

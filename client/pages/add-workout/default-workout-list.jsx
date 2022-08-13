@@ -5,7 +5,7 @@ export const DefaultWorkoutList = props => {
   const defaultList = props.list;
   const workoutTitle = [];
 
-  const { handleAddWorkout, refContainer } = useContext(AppContext);
+  const { handleAddWorkout } = useContext(AppContext);
 
   defaultList.forEach(element => {
     if (workoutTitle.indexOf(element.bodyPart) === -1) {
@@ -27,7 +27,7 @@ export const DefaultWorkoutList = props => {
                     </button>
                   </div>
                   <div id={`flush-collapse${index}`} className='collapse' aria-labelledby={`flush-heading${index}`} data-parent='#accordionFlush'>
-                    <WorkoutDetails reference={refContainer} addWorkout={handleAddWorkout} list={defaultList} bodyPart={element}/>
+                    <WorkoutDetails addWorkout={handleAddWorkout} list={defaultList} bodyPart={element}/>
                   </div>
                 </div>
             );
