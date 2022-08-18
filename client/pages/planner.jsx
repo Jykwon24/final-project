@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
-import { AppContext } from '../../app';
-import Redirect from '../../components/redirect';
+import { AppContext } from '../app';
+import Redirect from '../components/redirect';
 
 export default function Planner(props) {
   const [clicked, setClick] = useState(false);

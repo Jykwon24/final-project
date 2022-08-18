@@ -15,7 +15,7 @@ export const PageTitle = () => {
               <p className='mt-2 mb-2'>Stopwatch:</p>
             </div>
     );
-  } else if (hashRoute === '#calories') {
+  } else if (hashRoute === '#calories' || hashRoute === '#calories-result') {
     return (
             <div className='dg-background d-flex justify-content-center align-items-center text-white page-style'>
               <p className='mt-2 mb-2'>Calories:</p>
