@@ -10,6 +10,7 @@ export const CalorieResult = props => {
   return (
     <Modal
         show={props.show}
+        onHide={props.onHide}
         backdrop="static"
         aria-labelledby='contained-modal-title-vcenter'
         centered
@@ -22,10 +23,9 @@ export const CalorieResult = props => {
           {calories}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={props.onHide}>
-            Close
+          <Button variant="secondary" onClick={props.onBack}>
+            Go to planner
           </Button>
-          <Button variant="primary">Understood</Button>
         </Modal.Footer>
       </Modal>
 

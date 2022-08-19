@@ -1,18 +1,32 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AppContext } from '../app';
 
 export default function Header(props) {
+
+  const { calories, user } = useContext(AppContext);
+
   return (
    <div>
-     <div className='d-flex justify-content-between'>
+     <div className='d-flex justify-content-between align-items-center'>
        <div>
-          <h1 className='d-inline pt-2 ms-4'>Fit Track</h1>
+          <h1 className='d-inline ms-4 mb-0'>Fit Track</h1>
           <i className="fa-solid fa-fire-flame-curved"></i>
        </div>
        <div>
-        <button className='mt-3 me-4' onClick={() => props.onSignOut()}>Sign Out</button>
+        <h6 className='mt-3 me-4' onClick={() => props.onSignOut()}>Sign Out</h6>
        </div>
      </div>
-      <hr />
+     <div className='ms-4'>
+       <p className='mb-0'>Lets get started {user.username}!</p>
+     </div>
+      <hr className='mt-1 mb-1' />
+      {
+         calories
+           ? <div className='ms-4'>
+              <h6>Daily calorie goal:{calories}</h6>
+             </div>
+           : null
+      }
    </div>
   );
 }

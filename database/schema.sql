@@ -29,12 +29,7 @@ CREATE TABLE "userExerciseList" (
 
 CREATE TABLE "calories" (
 	"calorieId" serial NOT NULL,
-	"currentWeight" integer NOT NULL,
-	"height" integer NOT NULL,
-	"birthday" date NOT NULL,
-	"activityLevel" TEXT NOT NULL,
-	"gender" text NOT NULL,
-	"goal" TEXT NOT NULL,
+	"calorieRec" integer NOT NULL,
 	"userId" integer NOT NULL,
 	CONSTRAINT "calories_pk" PRIMARY KEY ("calorieId")
 ) WITH (

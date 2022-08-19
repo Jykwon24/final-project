@@ -166,6 +166,39 @@ app.put('/api/userList', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.put('/api/caloriesData', (req, res, next) => {
+  const { userData, userId } = req.body;
+  if (!userData) {
+    throw new ClientError(400, 'calories not found');
+  }
+  const sql = `
+    update "calories"
+    set "calorieRec" = $1
+    where "userId" = $2
+    returning *
+  `;
+  const params = [userData, userId];
+  db.query(sql, params)
+    .then(result => res.status(200).json(result.rows[0]))
+    .catch(err => next(err));
+});
+
+app.post('/api/caloriesData', (req, res, next) => {
+  const { userData, userId } = req.body;
+  if (!userData) {
+    throw new ClientError(400, 'calories not found');
+  }
+  const sql = `
+    insert into "calories" ("calorieRec", "userId")
+    values($1, $2)
+    returning *
+  `;
+  const params = [userData, userId];
+  db.query(sql, params)
+    .then(result => res.status(200).json(result.rows[0]))
+    .catch(err => next(err));
+});
+
 app.delete('/api/userList', (req, res, next) => {
   const { exerciseId } = req.body;
   if (!exerciseId) {

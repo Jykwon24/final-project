@@ -4,14 +4,17 @@ import { AppContext } from '../app';
 import Button from 'react-bootstrap/Button';
 
 export const Calories = () => {
-  const { userData, setUserData, setCalories } = useContext(AppContext);
+  const { userData, setUserData, setCalories, calories, user, day } = useContext(AppContext);
   const [modalStatus, setStatus] = useState(false);
   // setUserData({...userData, gender: event.target.value})
-
+  // s
   // calculation
   // For women = BMR = 655.1 + (9.563 x weight in kg) + (1.850 x height in cm) - (4.676 x age in years)
   // For men = BMR = 66.47 + (13.75 x weight in kg) + (5.003 x height in cm) - (6.755 x age in years)
 
+  function plannerReturn() {
+    window.location.hash = day;
+  }
   const handleClose = () => setStatus(false);
   const handleShow = () => setStatus(true);
 
@@ -63,13 +66,40 @@ export const Calories = () => {
     return Math.round(calories);
   };
 
+  async function updateCalories(userData) {
+    const userId = user.userId;
+    let req = {};
+
+    if (!calories) {
+      req = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userData, userId })
+      };
+    }
+
+    req = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ userData, userId })
+    };
+
+    // console.log(req);
+    await (await fetch('/api/caloriesData', req)).json();
+
+  }
+
   const calorieSubmit = event => {
     event.preventDefault();
     // console.log('userData after form submit:', userData);
     // console.log(calorieCalculation(userData));
     const result = calorieCalculation(userData);
     setCalories(result);
-    setUserData({ gender: '', currentWeight: '', height: '', age: '', activityLevel: '', goal: '' });
+    updateCalories(result);
   };
 
   const handleGender = event => {
@@ -187,7 +217,7 @@ export const Calories = () => {
     </div>
     {
         modalStatus
-          ? <CalorieResult show={modalStatus} onHide={handleClose}/>
+          ? <CalorieResult show={modalStatus} onHide={handleClose} onBack={plannerReturn}/>
           : null
     }
     </>
