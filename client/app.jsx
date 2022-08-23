@@ -4,11 +4,12 @@ import jwtDecode from 'jwt-decode';
 import Header from './components/header';
 import PageContent from './components/page-content';
 import Navbar from './components/navbar';
-import Planner from './pages/planner/planner';
+import Planner from './pages/planner';
 import { AuthPage } from './pages/auth-page';
 import { DefaultWorkoutList } from './pages/add-workout/default-workout-list';
 import { CustomWorkoutForm } from './pages/add-workout/custom-workout-form';
 import { Calories } from './pages/calories';
+import { CalorieResult } from './pages/calories-result';
 import { Stopwatch } from './pages/stopwatch';
 import { parseRoute } from './lib';
 
@@ -22,12 +23,27 @@ const App = () => {
   const [defaultList, setWorkoutList] = useState([]);
   const [userList, setUserList] = useState([]);
   const [targetExercise, setTarget] = useState({ exerciseId: null, date: null, name: '', details: '' });
+  const [userData, setUserData] = useState({
+    gender: '',
+    currentWeight: '',
+    height: '',
+    age: '',
+    activityLevel: '',
+    goal: ''
+  });
+  const [calories, setCalories] = useState('');
   const [view, setView] = useState('custom');
+  // console.log(calories);
+
+  async function getUserList() {
+    const uList = await (await fetch('/api/userList')).json();
+    setUserList(uList);
+  }
 
   useEffect(() => {
-    fetch('/api/userList')
-      .then(res => res.json())
-      .then(retrievedList => setUserList(retrievedList));
+    getUserList();
+    // .then(res => res.json())
+    // .then(retrievedList => setUserList(retrievedList));
   }, [setUserList]);
 
   useEffect(() => {
@@ -123,6 +139,9 @@ const App = () => {
     if (route.path === 'calories') {
       return <Calories />;
     }
+    if (route.path === 'calories-result') {
+      return <CalorieResult />;
+    }
     if (route.path === 'stopwatch') {
       return <Stopwatch />;
     }
@@ -144,6 +163,10 @@ const App = () => {
     view,
     setView,
     setDay,
+    userData,
+    calories,
+    setCalories,
+    setUserData,
     isAuthorizing,
     handleSignIn,
     handleAddWorkout,
