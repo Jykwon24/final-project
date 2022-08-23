@@ -12,7 +12,7 @@ export const PageTitle = () => {
   } else if (hashRoute === '#stopwatch') {
     return (
             <div className='dg-background d-flex justify-content-center align-items-center text-white page-style'>
-              <p className='mt-2 mb-2'>Stopwatch:</p>
+              <p className='mt-2 mb-2'>Timers:</p>
             </div>
     );
   } else if (hashRoute === '#calories' || hashRoute === '#calories-result') {
