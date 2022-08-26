@@ -12,6 +12,7 @@ import { Calories } from './pages/calories';
 import { CalorieResult } from './pages/calories-result';
 import { Stopwatch } from './pages/stopwatch';
 import { parseRoute } from './lib';
+import { Timer } from './pages/set-timer';
 
 export const AppContext = createContext(null);
 
@@ -144,6 +145,9 @@ const App = () => {
     }
     if (route.path === 'stopwatch') {
       return <Stopwatch />;
+    }
+    if (route.path === 'set-timer') {
+      return <Timer />;
     }
     if (route.path === 'default-list') {
       return <DefaultWorkoutList list={defaultList} />;

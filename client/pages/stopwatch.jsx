@@ -37,12 +37,11 @@ export const Stopwatch = () => {
   return (
     <>
     <div>
-
-      <div className='d-flex justify-content-center mx-auto'>
-        <div className='d-flex'>
-          <h1>{minutes}:</h1>
-          <h1>{seconds}:</h1>
-          <h1>{milliseconds}</h1>
+      <div className='d-flex mt-4 border'>
+        <div className='mx-auto'>
+            <h1 className='d-inline-flex'>{minutes}:</h1>
+            <h1 className='d-inline-flex'>{seconds}:</h1>
+            <h1 className='d-inline-flex'>{milliseconds}</h1>
           {/* {
         lap
           ? <p>{`${minutes}:${seconds}:${milliseconds}`}</p>
@@ -50,8 +49,8 @@ export const Stopwatch = () => {
           } */}
         </div>
       </div>
-
-      <div className='d-flex justify-content-center'>
+        <div className='d-flex'>
+          <div className='mx-auto'>
         {
         start
           ? <>
@@ -62,8 +61,15 @@ export const Stopwatch = () => {
               <button onClick={startTimer}>Start</button>
               <button onClick={() => setTime(0)}>Reset</button>
             </>
-      }
-      </div>
+        }
+          </div>
+        </div>
+        <div className='d-flex mt-4'>
+          <div className='mx-auto'>
+             <a href="#set-timer">Go to Set Timer</a>
+          </div>
+        </div>
+
     </div>
     </>
   );
