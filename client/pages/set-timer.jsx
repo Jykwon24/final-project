@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { TimeDisplay } from '../components/time-display';
 
 const timeData = {
@@ -7,7 +7,7 @@ const timeData = {
 };
 
 export const Timer = props => {
-  // const [start, setStart] = useState(false);
+  const [start, setStart] = useState(false);
   const [displayMin, setDisplayMin] = useState(0);
   const [displaySec, setDisplaySec] = useState(0);
   const [minutes, setMinutes] = useState(timeData);
@@ -16,7 +16,7 @@ export const Timer = props => {
   const [modalStatus, setModal] = useState(false);
   const [currentStatus, setStatus] = useState('rest');
   // const [reps, setReps] = useState(0);
-  // const [counter, setCounter] = useState(null);
+  // const [delay, setDelay] = useState(1000);
 
   const modalClick = () => {
     setModal(!modalStatus);
@@ -26,61 +26,72 @@ export const Timer = props => {
   // console.log('displayMin:', displayMin);
   // console.log('displaySec:', displaySec);
 
+  function useInterval(callback, delay) {
+    const savedCallBack = useRef();
+
+    useEffect(() => {
+      savedCallBack.current = callback;
+    }, [callback]);
+
+    useEffect(() => {
+      function tick() {
+        savedCallBack.current();
+      }
+      if (delay !== null) {
+        const id = setInterval(tick, delay);
+        return () => clearInterval(id);
+      }
+    }, [delay]);
+  }
+
   const timerStart = (event, data) => {
     event.preventDefault();
     setMinutes({ ...timeData, workout: data.workoutMins, rest: data.restMins });
     setSeconds({ ...timeData, workout: data.workoutSec, rest: data.restSec });
     setDisplayMin(data.workoutMins);
     setDisplaySec(data.workoutSec);
-    // setCounter(let interval = setInterval(countDown, 1000)
-
   };
 
-  const countDown = () => {
+  const countDownStart = () => {
     const workoutMinutes = parseInt(minutes.workout);
     const workoutSeconds = parseInt(seconds.workout);
     const restMinutes = parseInt(minutes.rest);
     const restSeconds = parseInt(seconds.rest);
 
-    let minute = displayMin;
-    let second = displaySec;
+    setDisplaySec(prev => prev - 1);
 
-    // console.log('inside countdown:', workoutMinutes);
-    // console.log('inside countdown:', workoutSeconds);
-    // console.log('inside countdown:', minute);
-    // console.log('inside countdown:', second);
-
-    if (minute === 0 && second === 0) {
+    if (displayMin === 0 && displaySec === 0) {
       if (currentStatus === 'rest') {
-        setDisplayMin(workoutMinutes);
-        setDisplaySec(workoutSeconds);
-        setStatus('workout');
-        return;
-      } else {
+        // console.log('working?');
         setDisplayMin(restMinutes);
         setDisplaySec(restSeconds);
+        setStatus('workout');
+        // console.log('inside if displayMin:', minute);
+        // console.log('inside if displaySec:', second);
+        return;
+      } else {
+        setDisplayMin(workoutMinutes);
+        setDisplaySec(workoutSeconds);
         setStatus('rest');
         // setReps(reps + 1);
         return;
       }
     }
 
-    if (second === 0) {
-      second = 59;
-      minute--;
-    } else {
-      second--;
-    }
+    // console.log('inside countdown workout minutes:', workoutMinutes);
+    // console.log('inside countdown workout seconds:', workoutSeconds);
+    // console.log('inside countdown rest minutes:', restMinutes);
+    // console.log('inside countdown rest seconds:', restSeconds);
+    // console.log('inside countdown displayMin:', displayMin);
+    // console.log('inside countdown displaySec:', typeof displaySec);
 
-    // if (restSeconds === 0) {
-    //   restSeconds = 59;
-    //   restMinutes--;
-    // } else {
-    //   restSeconds--;
-    // }
-    setDisplayMin(minute);
-    setDisplaySec(second);
+    if (displaySec === 0) {
+      setDisplaySec(59);
+      setDisplayMin(prevMin => prevMin - 1);
+    }
   };
+  const delay = 1000;
+  useInterval(countDownStart, start ? delay : null);
 
   // const wMinutes = ('0' + Math.floor((wMin / 60000) % 60)).slice(-2);
   // const wSeconds = ('0' + Math.floor((wSec / 1000) % 60)).slice(-2);
@@ -92,8 +103,8 @@ export const Timer = props => {
             <TimeDisplay minutes={displayMin} seconds={displaySec}/>
           </div>
           <button onClick={() => setModal(!modalStatus)}>Set Timer</button>
-          {/* <button onClick={() => setStart(false)}>Pause</button> */}
-          <button onClick={() => countDown()}>Start</button>
+          <button onClick={() => setStart(false)}>Pause</button>
+          <button onClick={() => setStart(true)}>Start</button>
         </div>
 
         </div>
