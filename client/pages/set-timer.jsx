@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { TimeDisplay } from '../components/time-display';
+import { RepCounter } from '../components/rep-counter';
+import { TimerControls } from '../components/timer-controls';
 
 const timeData = {
   workout: 0,
@@ -10,22 +12,20 @@ export const Timer = props => {
   const [start, setStart] = useState(false);
   const [displayMin, setDisplayMin] = useState(0);
   const [displaySec, setDisplaySec] = useState(0);
+  const [reps, setReps] = useState(0);
   const [minutes, setMinutes] = useState(timeData);
   const [seconds, setSeconds] = useState(timeData);
-  // const [userInput, setUserInput] = useState({});
   const [modalStatus, setModal] = useState(false);
+  const [repView, setRepView] = useState(false);
   const [currentStatus, setStatus] = useState('rest');
-  // const [reps, setReps] = useState(0);
-  // const [delay, setDelay] = useState(1000);
+  const [paused, setPause] = useState(false);
+  const [timerActive, setTimerStatus] = useState(false);
 
   const modalClick = () => {
     setModal(!modalStatus);
   };
-  // console.log('minutes:', minutes);
-  // console.log('seconds:', seconds);
-  // console.log('displayMin:', displayMin);
-  // console.log('displaySec:', displaySec);
 
+  // Custom Interval hook from Dan Abramov blog
   function useInterval(callback, delay) {
     const savedCallBack = useRef();
 
@@ -50,6 +50,10 @@ export const Timer = props => {
     setSeconds({ ...timeData, workout: data.workoutSec, rest: data.restSec });
     setDisplayMin(data.workoutMins);
     setDisplaySec(data.workoutSec);
+    setRepView(true);
+    setStart(true);
+    setTimerStatus(true);
+    setModal(false);
   };
 
   const countDownStart = () => {
@@ -62,61 +66,72 @@ export const Timer = props => {
 
     if (displayMin === 0 && displaySec === 0) {
       if (currentStatus === 'rest') {
-        // console.log('working?');
         setDisplayMin(restMinutes);
         setDisplaySec(restSeconds);
         setStatus('workout');
-        // console.log('inside if displayMin:', minute);
-        // console.log('inside if displaySec:', second);
         return;
       } else {
         setDisplayMin(workoutMinutes);
         setDisplaySec(workoutSeconds);
         setStatus('rest');
-        // setReps(reps + 1);
+        setReps(reps + 1);
         return;
       }
     }
-
-    // console.log('inside countdown workout minutes:', workoutMinutes);
-    // console.log('inside countdown workout seconds:', workoutSeconds);
-    // console.log('inside countdown rest minutes:', restMinutes);
-    // console.log('inside countdown rest seconds:', restSeconds);
-    // console.log('inside countdown displayMin:', displayMin);
-    // console.log('inside countdown displaySec:', typeof displaySec);
 
     if (displaySec === 0) {
       setDisplaySec(59);
       setDisplayMin(prevMin => prevMin - 1);
     }
   };
+
+  const countDownPause = () => {
+    setStart(false);
+    setPause(true);
+  };
+
+  const resumeCountDown = () => {
+    setStart(true);
+    setPause(false);
+  };
+
   const delay = 1000;
   useInterval(countDownStart, start ? delay : null);
 
-  // const wMinutes = ('0' + Math.floor((wMin / 60000) % 60)).slice(-2);
-  // const wSeconds = ('0' + Math.floor((wSec / 1000) % 60)).slice(-2);
+  const currentSetText = currentStatus === 'rest'
+    ? 'Workout!'
+    : 'Rest';
+
   return (
     <>
-      <div className='d-flex'>
-        <div className='mx-auto'>
-          <div className='d-flex'>
-            <TimeDisplay minutes={displayMin} seconds={displaySec}/>
+      <div>
+        <div className=''>
+            <h2 className='timer-text text-center'>{timerActive ? currentSetText : null}</h2>
+          <div className='timer-container'>
+            <div>
+              <TimeDisplay minutes={displayMin} seconds={displaySec}/>
+            </div>
+            <div>
+              <RepCounter reps={reps} repStatus={repView} />
+            </div>
+            <div>
+              {
+                timerActive
+                  ? <TimerControls pauseStatus={paused} pause={countDownPause} resume={resumeCountDown}/>
+                  : <button onClick={() => setModal(!modalStatus)}>Set Timer</button>
+              }
+            </div>
+            <div className='mt-3 text-center'>
+              <a href="#stopwatch">Go to Stopwatch</a>
+            </div>
           </div>
-          <button onClick={() => setModal(!modalStatus)}>Set Timer</button>
-          <button onClick={() => setStart(false)}>Pause</button>
-          <button onClick={() => setStart(true)}>Start</button>
         </div>
-
-        </div>
-          <div className='mx-auto'>
-           <a href="#stopwatch">Go to Stopwatch</a>
-        </div>
+      </div>
         {
           modalStatus
             ? <SetTimerModal startTimer={timerStart} modalClick={modalClick}/>
             : null
         }
-
     </>
   );
 };
@@ -126,11 +141,6 @@ const SetTimerModal = props => {
   const [wSec, setWSec] = useState(0);
   const [rMin, setRMin] = useState(0);
   const [rSec, setRSec] = useState(0);
-
-  // const input = {
-  //   workout: `${wMin}:${wSec}`,
-  //   rest: `${rMin}:${rSec}`
-  // };
 
   const input = {
     workoutMins: wMin,
@@ -209,9 +219,6 @@ const SetTimerModal = props => {
         </div>
       </form>
     </div>
-
     </>
-
   );
-
 };
