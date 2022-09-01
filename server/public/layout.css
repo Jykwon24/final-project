@@ -19,7 +19,13 @@
   /* z-index: 1000; */
 }
 
-.timer-container {
+.modal-content-container {
+  display: flex;
+  justify-content: center;
+  width: 30%;
+}
+
+/* .timer-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -29,8 +35,20 @@
   top: 0;
   left: 0;
   right: 0;
+} */
+
+.timer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60%;
+  margin: auto;
+  min-height: 200px;
+  padding-bottom: 1rem;
+  border-radius: 10px;
 }
 
 .timer-text {
-  margin-top: 3rem;
+  margin-top: 2rem;
+  min-height: 2rem;
 }

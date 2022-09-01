@@ -95,6 +95,16 @@ export const Timer = props => {
     setPause(false);
   };
 
+  const resetCountDown = () => {
+    setDisplayMin(0);
+    setDisplaySec(0);
+    setStart(false);
+    setPause(false);
+    setReps(0);
+    setRepView(false);
+    setTimerStatus(false);
+  };
+
   const delay = 1000;
   useInterval(countDownStart, start ? delay : null);
 
@@ -105,9 +115,9 @@ export const Timer = props => {
   return (
     <>
       <div>
-        <div className=''>
+        <div>
             <h2 className='timer-text text-center'>{timerActive ? currentSetText : null}</h2>
-          <div className='timer-container'>
+          <div className='timer-container dg-background'>
             <div>
               <TimeDisplay minutes={displayMin} seconds={displaySec}/>
             </div>
@@ -117,12 +127,12 @@ export const Timer = props => {
             <div>
               {
                 timerActive
-                  ? <TimerControls pauseStatus={paused} pause={countDownPause} resume={resumeCountDown}/>
-                  : <button onClick={() => setModal(!modalStatus)}>Set Timer</button>
+                  ? <TimerControls pauseStatus={paused} pause={countDownPause} resume={resumeCountDown} reset={resetCountDown}/>
+                  : <button className='button-style' onClick={() => setModal(!modalStatus)}>Set Timer</button>
               }
             </div>
             <div className='mt-3 text-center'>
-              <a href="#stopwatch">Go to Stopwatch</a>
+              <a className='link-style' href="#stopwatch">Go to Stopwatch</a>
             </div>
           </div>
         </div>
@@ -152,72 +162,74 @@ const SetTimerModal = props => {
   return (
     <>
     <div className='modal-container'>
-      <form onSubmit={event => props.startTimer(event, input)}>
-        <div className='bg-light'>
-          <div>
-            <h3>Workout Time:</h3>
-            <label htmlFor='workout-minutes' className='sr-only'>Mins</label>
-              <input
-                type='number'
-                id='workout-minutes'
-                name='workout-minutes'
-                placeholder='00'
-                min="0"
-                max="59"
-                onChange={event => {
-                  const { value } = event.target;
-                  value ? setWMin(value) : setWMin(0);
-                }}
-                />
-                <p className='d-inline'>:</p>
-            <label htmlFor='workout-seconds' className='sr-only'>Secs</label>
-              <input
-                type='number'
-                id='workout-seconds'
-                name='workout-seconds'
-                placeholder='00'
-                min="0"
-                max="59"
-                onChange={event => {
-                  const { value } = event.target;
-                  value ? setWSec(value) : setWSec(0);
-                }}
-                 />
-          </div>
-          <div>
-            <h3>Rest Time:</h3>
-              <label htmlFor='rest-minutes' className='sr-only'>Mins</label>
+      <div className='modal-content-container'>
+        <form onSubmit={event => props.startTimer(event, input)}>
+          <div className='bg-light'>
+            <div>
+              <h3>Workout Time:</h3>
+              <label htmlFor='workout-minutes' className='sr-only'>Mins</label>
                 <input
                   type='number'
-                  id='rest-minutes'
-                  name='rest-minutes'
+                  id='workout-minutes'
+                  name='workout-minutes'
                   placeholder='00'
                   min="0"
                   max="59"
                   onChange={event => {
                     const { value } = event.target;
-                    value ? setRMin(value) : setRMin(0);
-                  }}/>
-                <p className='d-inline'>:</p>
-                <label htmlFor='rest-seconds'className='sr-only'>Secs</label>
+                    value ? setWMin(value) : setWMin(0);
+                  }}
+                  />
+                  <p className='d-inline'>:</p>
+              <label htmlFor='workout-seconds' className='sr-only'>Secs</label>
                 <input
                   type='number'
-                  id='rest-seconds'
-                  name='rest-seconds'
+                  id='workout-seconds'
+                  name='workout-seconds'
                   placeholder='00'
                   min="0"
                   max="59"
                   onChange={event => {
                     const { value } = event.target;
-                    value ? setRSec(value) : setRSec(0);
-                  }} />
+                    value ? setWSec(value) : setWSec(0);
+                  }}
+                  />
+            </div>
+            <div>
+              <h3>Rest Time:</h3>
+                <label htmlFor='rest-minutes' className='sr-only'>Mins</label>
+                  <input
+                    type='number'
+                    id='rest-minutes'
+                    name='rest-minutes'
+                    placeholder='00'
+                    min="0"
+                    max="59"
+                    onChange={event => {
+                      const { value } = event.target;
+                      value ? setRMin(value) : setRMin(0);
+                    }}/>
+                  <p className='d-inline'>:</p>
+                  <label htmlFor='rest-seconds'className='sr-only'>Secs</label>
+                  <input
+                    type='number'
+                    id='rest-seconds'
+                    name='rest-seconds'
+                    placeholder='00'
+                    min="0"
+                    max="59"
+                    onChange={event => {
+                      const { value } = event.target;
+                      value ? setRSec(value) : setRSec(0);
+                    }} />
+            </div>
+            <div>
+              <p onClick={() => props.modalClick()}>Close</p>
+            <button>Start!</button>
+            </div>
           </div>
-          <div>
-            <p onClick={() => props.modalClick()}>Close</p>
-          <button>Start!</button>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
     </>
   );

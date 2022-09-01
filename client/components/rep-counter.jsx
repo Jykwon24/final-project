@@ -5,7 +5,7 @@ export const RepCounter = props => {
   if (!props.repStatus) return null;
 
   return (
-    <div>
+    <div className='text-white rep-font'>
       Reps:{props.reps}
     </div>
   );

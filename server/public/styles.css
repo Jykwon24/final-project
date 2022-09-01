@@ -17,6 +17,10 @@
   font-size: 0.8rem;
 }
 
+.rep-font {
+  font-size: 1.5rem;
+}
+
 .nav-bar-style {
   margin: auto;
   width: 75%;
@@ -27,5 +31,21 @@
 }
 
 .timer-font {
+  margin-top: 5px;
   font-size: 4rem;
+  color: aliceblue;
+  font-weight: bold;
+  border: 1px solid white;
+  border-radius: 5px;
+}
+
+.link-style {
+  color: aliceblue;
+  cursor: pointer;
+}
+
+.button-style {
+  background-color: aliceblue;
+  border-radius: 5px;
+  border: black;
 }
