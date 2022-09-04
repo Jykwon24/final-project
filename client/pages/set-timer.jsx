@@ -229,7 +229,7 @@ const SetTimerModal = props => {
                 </div>
             </div>
             <div className='mt-2 mb-2'>
-              <button>Start!</button>
+              <button className='start-button'>Start!</button>
             </div>
           </div>
         </form>

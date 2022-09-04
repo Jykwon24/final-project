@@ -51,10 +51,57 @@
 }
 
 .x-box {
+  cursor: pointer;
   border: solid 1px black;
-  margin-top: 1px;
-  margin-right: 1px;
+  border-radius: 5px;
+  margin-top: 1.5px;
+  margin-right: 1.5px;
+  padding-left: 3.5px;
+  padding-top: 1px;
   font-size: 1rem;
   height: 20px;
   width: 20px;
+  line-height: 1;
+}
+
+.start-button {
+  color: aliceblue;
+  background-color: rgb(67, 80, 85);
+  border: none;
+  border-radius: 5px;
+}
+
+.stop-watch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(67, 80, 85);
+  border: solid 2px black;
+  border-radius: 50%;
+  width: 250px;
+  height: 250px;
+}
+
+.stop-watch-start {
+  cursor: pointer;
+  color: #7eb09b;
+}
+
+.stop-watch-reset {
+  cursor: pointer;
+  color: #2d7dd2;
+}
+
+.stop-watch-stop {
+  cursor: pointer;
+  border: solid 2px black;
+  background-color: #c14953;
+  width: 37.961px;
+  height: 33.219px;
+  border-radius: 5px;
+}
+
+.link-style-stopwatch {
+  color: rgb(67, 80, 85);
+  text-decoration: none;
 }

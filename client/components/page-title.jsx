@@ -9,7 +9,7 @@ export const PageTitle = () => {
 
   if (!user) {
     return null;
-  } else if (hashRoute === '#stopwatch') {
+  } else if (hashRoute === '#stopwatch' || hashRoute === '#set-timer') {
     return (
             <div className='dg-background d-flex justify-content-center align-items-center text-white page-style'>
               <p className='mt-2 mb-2'>Timers:</p>

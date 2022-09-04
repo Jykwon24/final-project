@@ -37,36 +37,33 @@ export const Stopwatch = () => {
   return (
     <>
     <div>
-      <div className='d-flex mt-4 border'>
-        <div className='mx-auto'>
-            <h1 className='d-inline-flex'>{minutes}:</h1>
-            <h1 className='d-inline-flex'>{seconds}:</h1>
-            <h1 className='d-inline-flex'>{milliseconds}</h1>
-          {/* {
-        lap
-          ? <p>{`${minutes}:${seconds}:${milliseconds}`}</p>
-          : null
-          } */}
-        </div>
+      <div className='d-flex mt-4'>
+          <div className='mx-auto stop-watch'>
+            <div>
+              <h1 className='d-inline-flex text-white'>{minutes}:</h1>
+              <h1 className='d-inline-flex text-white'>{seconds}:</h1>
+              <h1 className='d-inline-flex text-white'>{milliseconds}</h1>
+            </div>
+          </div>
       </div>
-        <div className='d-flex'>
+        <div className='mt-1 d-flex'>
           <div className='mx-auto'>
         {
         start
           ? <>
-              <button onClick={stopTimer}>Stop</button>
+              <div className='stop-watch-stop' onClick={stopTimer}></div>
               {/* <button onClick={showLap}>Lap</button> */}
             </>
           : <>
-              <button onClick={startTimer}>Start</button>
-              <button onClick={() => setTime(0)}>Reset</button>
+              <i className='fa-regular fa-square-caret-right fs-1 stop-watch-start' onClick={startTimer}></i>
+              <i className='fa-solid fa-arrow-rotate-left fs-1 ms-2 stop-watch-reset' onClick={() => setTime(0)}></i>
             </>
         }
           </div>
         </div>
         <div className='d-flex mt-4'>
           <div className='mx-auto'>
-             <a href="#set-timer">Go to Set Timer</a>
+             <a className='link-style-stopwatch' href="#set-timer">Go to Set Timer</a>
           </div>
         </div>
 
