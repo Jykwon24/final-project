@@ -163,18 +163,20 @@ const SetTimerModal = props => {
     <>
     <div className='modal-container'>
       <div className='modal-content-container'>
-        <form onSubmit={event => props.startTimer(event, input)}>
-          <div className='bg-light'>
-            <div>
+        <form onSubmit={event => props.startTimer(event, input)} className='form-box'>
+          <div className='bg-light form-content-container'>
+              <span className='x-box position-absolute end-0' onClick={() => props.modalClick()}>X</span>
+            <div className='form-content-container'>
               <h3>Workout Time:</h3>
               <label htmlFor='workout-minutes' className='sr-only'>Mins</label>
+                <div>
                 <input
                   type='number'
                   id='workout-minutes'
                   name='workout-minutes'
                   placeholder='00'
-                  min="0"
-                  max="59"
+                  min='0'
+                  max='59'
                   onChange={event => {
                     const { value } = event.target;
                     value ? setWMin(value) : setWMin(0);
@@ -187,24 +189,26 @@ const SetTimerModal = props => {
                   id='workout-seconds'
                   name='workout-seconds'
                   placeholder='00'
-                  min="0"
-                  max="59"
+                  min='0'
+                  max='59'
                   onChange={event => {
                     const { value } = event.target;
                     value ? setWSec(value) : setWSec(0);
                   }}
                   />
+                </div>
             </div>
-            <div>
+            <div className='form-content-container'>
               <h3>Rest Time:</h3>
                 <label htmlFor='rest-minutes' className='sr-only'>Mins</label>
+                <div>
                   <input
                     type='number'
                     id='rest-minutes'
                     name='rest-minutes'
                     placeholder='00'
-                    min="0"
-                    max="59"
+                    min='0'
+                    max='59'
                     onChange={event => {
                       const { value } = event.target;
                       value ? setRMin(value) : setRMin(0);
@@ -216,16 +220,16 @@ const SetTimerModal = props => {
                     id='rest-seconds'
                     name='rest-seconds'
                     placeholder='00'
-                    min="0"
-                    max="59"
+                    min='0'
+                    max='59'
                     onChange={event => {
                       const { value } = event.target;
                       value ? setRSec(value) : setRSec(0);
                     }} />
+                </div>
             </div>
-            <div>
-              <p onClick={() => props.modalClick()}>Close</p>
-            <button>Start!</button>
+            <div className='mt-2 mb-2'>
+              <button>Start!</button>
             </div>
           </div>
         </form>

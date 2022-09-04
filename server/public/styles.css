@@ -49,3 +49,12 @@
   border-radius: 5px;
   border: black;
 }
+
+.x-box {
+  border: solid 1px black;
+  margin-top: 1px;
+  margin-right: 1px;
+  font-size: 1rem;
+  height: 20px;
+  width: 20px;
+}
