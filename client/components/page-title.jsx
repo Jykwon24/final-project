@@ -11,33 +11,32 @@ export const PageTitle = () => {
     return null;
   } else if (hashRoute === '#stopwatch' || hashRoute === '#set-timer') {
     return (
-            <div className='dg-background d-flex justify-content-center align-items-center text-white page-style'>
+            <div className='dg-background-title d-flex justify-content-center align-items-center text-white page-style'>
               <p className='mt-2 mb-2'>Timers:</p>
             </div>
     );
   } else if (hashRoute === '#calories' || hashRoute === '#calories-result') {
     return (
-            <div className='dg-background d-flex justify-content-center align-items-center text-white page-style'>
+            <div className='dg-background-title d-flex justify-content-center align-items-center text-white page-style'>
               <p className='mt-2 mb-2'>Calories:</p>
             </div>
     );
   } else if (hashRoute === '#default-list') {
     return (
-            <div className='dg-background d-flex justify-content-center align-items-center text-white page-style'>
+            <div className='dg-background-title d-flex justify-content-center align-items-center text-white page-style'>
               <p className='mt-2 mb-2'>Add workout from provided list below:</p>
             </div>
     );
   } else if (hashRoute === '#custom-workout') {
     return (
-      <div className='dg-background d-flex justify-content-center align-items-center text-white page-style'>
+      <div className='dg-background-title d-flex justify-content-center align-items-center text-white page-style'>
         <p className='mt-2 mb-2'>Create a custom workout to add:</p>
       </div>
     );
   } else {
     return (
-            <div className='dg-background d-flex justify-content-around align-items-center text-white page-style'>
-              <p className='mt-2 mb-2'>Exercise:</p>
-              <p className='mt-2 mb-2'>Sets/Reps:</p>
+            <div className='dg-background-title d-flex justify-content-center align-items-center text-white page-style'>
+              <p className='mt-2 mb-2'>Exercises:</p>
             </div>
     );
   }

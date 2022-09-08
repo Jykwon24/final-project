@@ -2,6 +2,18 @@
   background-color: rgb(67, 80, 85);
 }
 
+.dg-background-active {
+  background-color: rgb(67, 80, 85);
+  border-radius: 5px;
+  height: 36px;
+  font-weight: bold;
+}
+
+.dg-background-title {
+  background-color: rgb(67, 80, 85);
+  border-radius: 5px;
+}
+
 .week-style {
   height: 2rem;
   margin-left: 0.5rem;
@@ -29,6 +41,16 @@
 .nav-bar {
   height: 2.5rem;
 }
+
+.nav-bar-items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* .nav-bar-active {
+
+} */
 
 .timer-font {
   margin-top: 5px;
@@ -104,4 +126,35 @@
 .link-style-stopwatch {
   color: rgb(67, 80, 85);
   text-decoration: none;
+}
+
+.logo-style {
+  background-color: rgb(67, 80, 85);
+  border-radius: 50%;
+  color: #e0f805;
+  margin-left: 0.5rem;
+  padding-left: 6px;
+  padding-top: 2px;
+  width: 30px;
+  height: 30px;
+}
+
+.logo-header {
+  color: #e0f805;
+  background-color: rgb(67, 80, 85);
+}
+
+.user-style {
+  text-decoration: underline;
+}
+
+.sign-out-style {
+  padding: 2px;
+  color: aliceblue;
+  font-style: oblique;
+  font-weight: bold;
+  border-radius: 3px;
+  background-color: rgb(67, 80, 85);
+  cursor: pointer;
+  border: 1px solid black;
 }

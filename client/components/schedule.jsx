@@ -18,7 +18,7 @@ export default function Week() {
 
   let currentDayDisplay;
 
-  const active = 'dg-background col text-white text-decoration-none font-size';
+  const active = 'dg-background-active col text-white text-decoration-none font-size';
   const deactive = 'col text-black text-decoration-none font-size';
 
   const handleClick = element => {
