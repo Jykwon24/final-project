@@ -2,7 +2,7 @@ import React from 'react';
 
 export const RepCounter = props => {
 
-  if (!props.repStatus) return null;
+  if (!props.timerStatus) return null;
 
   return (
     <div className='text-white rep-font'>

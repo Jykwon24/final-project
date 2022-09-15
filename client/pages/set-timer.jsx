@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-// import { TimeDisplay } from '../components/time-display';
-// import { RepCounter } from '../components/rep-counter';
+import { TimeDisplay } from '../components/time-display';
+import { RepCounter } from '../components/rep-counter';
 // import { TimerControls } from '../components/timer-controls';
 
 // const timeData = {
@@ -11,34 +11,35 @@ import React, { useState } from 'react';
 export const Timer = props => {
   const [workoutSeconds, setWorkoutSeconds] = useState(0);
   const [restSeconds, setRestSeconds] = useState(0);
-  const [currentStatus, setCurrentStatus] = useState('workout');
+  const [reps, setReps] = useState(0);
+  const [currentStatus, setCurrentStatus] = useState('rest');
   const [currentSeconds, setCurrentSeconds] = useState(null);
   const [modalStatus, setModalStatus] = useState(false);
-  // const [isTimerStarted, setIsTimerStarted] = useState(false);
+  const [isTimerStarted, setIsTimerStarted] = useState(false);
   // const [int, setInt] = useState(null);
 
-  function intervalFn() {
-    // console.log(currentSeconds);
+  // function intervalFn() {
+  //   console.log(currentSeconds);
 
-    // if (currentSeconds !== null) {
-    // const newSec = currentSeconds - 1;
-    // console.log(newSec);
-    setCurrentSeconds(i => {
-      if (i !== null) {
+  //   if (currentSeconds !== null) {
+  //     const newSec = currentSeconds - 1;
+  //     console.log(newSec);
+  //     setCurrentSeconds(i => {
+  //       if (i !== null) {
 
-        const newSec = i - 1;
+  //         const newSec = i - 1;
 
-        if (newSec === 0) {
-          setCurrentStatus(currentStatus === 'workout' ? 'rest' : 'workout');
-          // console.log(currentStatus, restSeconds, workoutSeconds);
-          return currentStatus === 'workout' ? restSeconds : workoutSeconds;
-        }
-        return newSec;
-      }
-    });
+  //         if (newSec === 0) {
+  //           setCurrentStatus(currentStatus === 'workout' ? 'rest' : 'workout');
+  //           console.log(currentStatus, restSeconds, workoutSeconds);
+  //           return currentStatus === 'workout' ? restSeconds : workoutSeconds;
+  //         }
+  //         return newSec;
+  //       }
+  //     });
 
-    // }
-  }
+  //   }
+  // }
 
   const timerStart = (event, data) => {
     event.preventDefault();
@@ -50,14 +51,15 @@ export const Timer = props => {
     setCurrentSeconds(totalWorkoutSec);
     setCurrentStatus('workout');
     setModalStatus(false);
-    // setIsTimerStarted(true);
+    setIsTimerStarted(true);
     // setInt(setInterval(intervalFn, 1000));
-    intervalFn();
+    // intervalFn();
+    setReps(2);
   };
 
-  // const currentSetText = currentStatus === 'rest'
-  //   ? 'Workout!'
-  //   : 'Rest';
+  const currentSetText = currentStatus === 'rest'
+    ? 'Workout!'
+    : 'Rest';
   // 125
 
   // 125 % 60 = 5
@@ -67,23 +69,22 @@ export const Timer = props => {
     <>
       <div>
         <div>
-          <h2 className='timer-text text-center'>{currentStatus}</h2>
-          <div className='timer-container dg-background'>
-            <div>
-              {currentSeconds}
-              {/* <TimeDisplay minutes={displayMin} seconds={displaySec} /> */}
-            </div>
-            <div>
-              {/* <RepCounter reps={reps} repStatus={repView} /> */}
-            </div>
-            <div>
-              {currentSeconds === null ? <button className='button-style' onClick={() => setModalStatus(true)}>Set Timer</button> : ''}
-              {/* {
-                timerActive
-                  ? <TimerControls pauseStatus={paused} pause={countDownPause} resume={resumeCountDown} reset={resetCountDown} />
-                  : <button className='button-style' onClick={() => setModal(!modalStatus)}>Set Timer</button>
-              } */}
-            </div>
+          <h2 className='timer-text text-center'>{!isTimerStarted && currentSetText}</h2>
+            <div className='timer-container dg-background'>
+              <div>
+                <TimeDisplay currentSeconds={currentSeconds} restSeconds={restSeconds} workoutSeconds={workoutSeconds} updateSeconds={setCurrentSeconds} currentStatus={currentStatus} updateStatus={setCurrentStatus}/>
+              </div>
+              <div>
+                <RepCounter reps={reps} timerStatus={isTimerStarted} />
+              </div>
+              <div>
+                {currentSeconds === null ? <button className='button-style' onClick={() => setModalStatus(true)}>Set Timer</button> : ''}
+                {/* {
+                  timerActive
+                    ? <TimerControls pauseStatus={paused} pause={countDownPause} resume={resumeCountDown} reset={resetCountDown} />
+                    : <button className='button-style' onClick={() => setModal(!modalStatus)}>Set Timer</button>
+                } */}
+              </div>
             <div className='mt-3 text-center'>
               <a className='link-style' href="#stopwatch">Go to Stopwatch</a>
             </div>
