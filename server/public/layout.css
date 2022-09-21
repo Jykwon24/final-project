@@ -67,3 +67,44 @@
   margin-bottom: 0.5rem;
   border-radius: 5px;
 }
+
+.calorie-form-container {
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
+  width: 50%;
+  margin: auto;
+}
+
+.text-form-container {
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
+  width: 70%;
+  margin: auto;
+}
+
+.calorie-content {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.calorie-sizing {
+  width: 50%;
+}
+
+.input-sizing-select {
+  width: 100%;
+  height: 30px;
+}
+
+.input-sizing {
+  width: 100%;
+}
+
+.calorie-button {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+}

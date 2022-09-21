@@ -158,3 +158,7 @@
   cursor: pointer;
   border: 1px solid black;
 }
+
+.text-style {
+  font-size: 0.8rem;
+}

@@ -9,55 +9,87 @@ import { RepCounter } from '../components/rep-counter';
 // };
 
 export const Timer = props => {
-  const [workoutSeconds, setWorkoutSeconds] = useState(0);
-  const [restSeconds, setRestSeconds] = useState(0);
-  const [reps, setReps] = useState(0);
-  const [currentStatus, setCurrentStatus] = useState('rest');
-  const [currentSeconds, setCurrentSeconds] = useState(null);
+  const [timeData, setTimeData] = useState({
+    currentSeconds: null,
+    workoutSeconds: 0,
+    restSeconds: 0,
+    reps: 0,
+    currentStatus: 'rest',
+    isTimerStarted: false,
+    int: null
+  });
+  // const [workoutSeconds, setWorkoutSeconds] = useState(0);
+  // const [restSeconds, setRestSeconds] = useState(0);
+  // const [reps, setReps] = useState(0);
+  // const [currentStatus, setCurrentStatus] = useState('rest');
+  // const [currentSeconds, setCurrentSeconds] = useState(null);
   const [modalStatus, setModalStatus] = useState(false);
-  const [isTimerStarted, setIsTimerStarted] = useState(false);
+  // const [isTimerStarted, setIsTimerStarted] = useState(false);
   // const [int, setInt] = useState(null);
 
-  // function intervalFn() {
-  //   console.log(currentSeconds);
+  // console.log('current status in timeData obj:', timeData.currentStatus);
 
-  //   if (currentSeconds !== null) {
-  //     const newSec = currentSeconds - 1;
-  //     console.log(newSec);
-  //     setCurrentSeconds(i => {
-  //       if (i !== null) {
+  function intervalFn() {
 
-  //         const newSec = i - 1;
+    // console.log('currentSeconds in timeData obj:', timeData.currentSeconds);
 
-  //         if (newSec === 0) {
-  //           setCurrentStatus(currentStatus === 'workout' ? 'rest' : 'workout');
-  //           console.log(currentStatus, restSeconds, workoutSeconds);
-  //           return currentStatus === 'workout' ? restSeconds : workoutSeconds;
-  //         }
-  //         return newSec;
-  //       }
-  //     });
+    if (timeData.currentSeconds !== null) {
+      // const newSec = currentSeconds - 1;
+      // console.log(newSec);
+      setTimeData({
+        ...timeData,
+        currentSeconds: timeData.currentSeconds - 1
+      });
 
-  //   }
-  // }
+      if (timeData.currentSeconds === 0 && timeData.currentStatus === 'workout') {
+        setTimeData({
+          ...timeData,
+          currentStatus: timeData.currentStatus === 'workout' ? 'rest' : 'workout',
+          currentSeconds: timeData.currentStatus === 'workout' ? timeData.restSeconds : timeData.workoutSeconds
+        });
+      }
+
+      // setCurrentSeconds(i => {
+      //   if (i !== null) {
+
+      //     const newSec = i - 1;
+
+      //     if (newSec === 0) {
+      //       setCurrentStatus(currentStatus === 'workout' ? 'rest' : 'workout');
+      //       console.log(currentStatus, restSeconds, workoutSeconds);
+      //       return currentStatus === 'workout' ? restSeconds : workoutSeconds;
+      //     }
+      //     return newSec;
+      //   }
+      // });
+
+    }
+  }
 
   const timerStart = (event, data) => {
     event.preventDefault();
     const { workoutMins, workoutSec, restMins, restSec } = data;
     const totalWorkoutSec = Number(workoutMins || 0) * 60 + Number(workoutSec || 0);
     const totalRestSec = Number(restMins || 0) * 60 + Number(restSec || 0);
-    setWorkoutSeconds(totalWorkoutSec);
-    setRestSeconds(totalRestSec);
-    setCurrentSeconds(totalWorkoutSec);
-    setCurrentStatus('workout');
+    setTimeData({
+      ...timeData,
+      currentSeconds: totalWorkoutSec,
+      workoutSeconds: totalWorkoutSec,
+      restSeconds: totalRestSec,
+      currentStatus: 'workout',
+      isTimerStarted: true
+    });
+    // setWorkoutSeconds(totalWorkoutSec);
+    // setRestSeconds(totalRestSec);
+    // setCurrentSeconds(totalWorkoutSec);
+    // setCurrentStatus('workout');
     setModalStatus(false);
-    setIsTimerStarted(true);
+    // setIsTimerStarted(true);
     // setInt(setInterval(intervalFn, 1000));
     // intervalFn();
-    setReps(2);
   };
 
-  const currentSetText = currentStatus === 'rest'
+  const currentSetText = timeData.currentStatus === 'workout'
     ? 'Workout!'
     : 'Rest';
   // 125
@@ -69,16 +101,18 @@ export const Timer = props => {
     <>
       <div>
         <div>
-          <h2 className='timer-text text-center'>{!isTimerStarted && currentSetText}</h2>
+          <h2 className='timer-text text-center'>{timeData.isTimerStarted && currentSetText}</h2>
             <div className='timer-container dg-background'>
               <div>
-                <TimeDisplay currentSeconds={currentSeconds} restSeconds={restSeconds} workoutSeconds={workoutSeconds} updateSeconds={setCurrentSeconds} currentStatus={currentStatus} updateStatus={setCurrentStatus}/>
+                {/* <TimeDisplay currentSeconds={currentSeconds} restSeconds={restSeconds} workoutSeconds={workoutSeconds} updateSeconds={setCurrentSeconds} currentStatus={currentStatus} updateStatus={setCurrentStatus}/> */}
+                <TimeDisplay data={timeData} />
+              <button onClick={() => intervalFn()}>Click</button>
               </div>
               <div>
-                <RepCounter reps={reps} timerStatus={isTimerStarted} />
+                <RepCounter reps={timeData.reps} timerStatus={timeData.isTimerStarted} />
               </div>
               <div>
-                {currentSeconds === null ? <button className='button-style' onClick={() => setModalStatus(true)}>Set Timer</button> : ''}
+                {timeData.currentSeconds === null ? <button className='button-style' onClick={() => setModalStatus(true)}>Set Timer</button> : ''}
                 {/* {
                   timerActive
                     ? <TimerControls pauseStatus={paused} pause={countDownPause} resume={resumeCountDown} reset={resetCountDown} />
