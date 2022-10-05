@@ -1,3 +1,7 @@
+/* .auth-background-img {
+
+} */
+
 .dg-background {
   background-color: rgb(67, 80, 85);
 }
@@ -161,4 +165,28 @@
 
 .text-style {
   font-size: 0.8rem;
+}
+
+.auth-form-style {
+  width: 70%;
+}
+
+.auth-item-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-content {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.form-content > label {
+  width: 79px;
+  text-align: end;
 }

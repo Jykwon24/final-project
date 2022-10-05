@@ -17,7 +17,11 @@ export default function Header(props) {
        </div>
      </div>
      <div className='ms-4'>
-        <p className='mb-0'>Lets get started <span className='user-style'>{user.username}</span>!</p>
+      {
+       user
+         ? <p className='mb-0'>Lets get started <span className='user-style'>{user.username}</span>!</p>
+         : null
+      }
      </div>
       <hr className='mt-1 mb-1' />
       {

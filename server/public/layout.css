@@ -1,3 +1,7 @@
+textarea {
+  height: 200px;
+}
+
 .foot-bar {
   position: absolute;
   bottom: 1rem;
@@ -90,6 +94,18 @@
   justify-content: space-between;
 }
 
+.custom-form-container {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.custom-form-content {
+  width: 70%;
+  text-align: center;
+}
+
 .calorie-sizing {
   width: 50%;
 }
@@ -107,4 +123,10 @@
   margin-top: 1rem;
   display: flex;
   justify-content: center;
+}
+
+.auth-form-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

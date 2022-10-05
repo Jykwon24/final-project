@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { AppContext } from '../../app';
+import Button from 'react-bootstrap/Button';
 
 export const CustomWorkoutForm = () => {
   const [workoutName, setWorkoutName] = useState('');
@@ -101,7 +102,8 @@ export const CustomWorkoutForm = () => {
 
   return (
     <>
-      <form className='w-100' onSubmit={alternateSubmitAction}>
+    <div className='custom-form-container'>
+      <form className='custom-form-content' onSubmit={alternateSubmitAction}>
         <h3>{alternateActionText}</h3>
         <div>
           <input
@@ -111,11 +113,11 @@ export const CustomWorkoutForm = () => {
             name='workoutName'
             type='text'
             placeholder='Workout Name...'
-            className='mb-2'
+            className='mb-2 input-sizing'
             defaultValue={targetExercise.name}
             onChange={handleWorkoutName}/>
         </div>
-        <div className='h-100'>
+        <div>
           <textarea
             required
             id='details'
@@ -131,7 +133,11 @@ export const CustomWorkoutForm = () => {
         <div>
          {
           view === 'custom'
-            ? <button type='submit'>Add workout</button>
+            ? <div className='calorie-button'>
+                <Button className='logo-header' type='submit' variant="light">
+                  Submit
+                </Button>
+              </div>
             : <>
                 <button type='submit'> Update workout </button>
                 <button> Back </button>
@@ -139,6 +145,7 @@ export const CustomWorkoutForm = () => {
             }
         </div>
       </form>
+    </div>
     </>
   );
 };
