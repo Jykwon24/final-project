@@ -50,8 +50,8 @@ export const AuthForm = props => {
 
   return (
     <>
-      <form className='w-100' onSubmit={handleSubmit}>
-        <div>
+      <form className='w-100 auth-item-layout' onSubmit={handleSubmit}>
+        <div className='form-content'>
           <label htmlFor='username'>
             Username:
           </label>
@@ -63,7 +63,7 @@ export const AuthForm = props => {
             name='username'
             onChange={handleUser}/>
         </div>
-        <div>
+        <div className='form-content'>
           <label htmlFor='password'>
             Password:
           </label>
