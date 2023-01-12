@@ -34,18 +34,19 @@ const App = () => {
   });
   const [calories, setCalories] = useState('');
   const [view, setView] = useState('custom');
-  // console.log(calories);
-
-  async function getUserList() {
-    const uList = await (await fetch('/api/userList')).json();
-    setUserList(uList);
-  }
+  // console.log('days:', day);
+  // console.log('userList:', userList);
 
   useEffect(() => {
+    async function getUserList() {
+      const response = await fetch('/api/userList/' + day);
+      const uList = await response.json();
+      setUserList(uList);
+    }
     getUserList();
     // .then(res => res.json())
     // .then(retrievedList => setUserList(retrievedList));
-  }, [setUserList]);
+  }, [day]);
 
   useEffect(() => {
     // console.log('hash useeffect called');

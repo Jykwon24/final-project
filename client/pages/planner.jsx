@@ -17,6 +17,24 @@ export default function Planner(props) {
     );
   }
 
+  // async function getUserList() {
+  //   const req = {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({ day })
+  //   };
+  //   const uList = await (await fetch('/api/userList', req)).json();
+  //   setUserList(uList);
+  // }
+
+  // useEffect(() => {
+  //   getUserList();
+  //   // .then(res => res.json())
+  //   // .then(retrievedList => setUserList(retrievedList));
+  // }, [day]);
+
   const userListCopy = [...userList];
 
   const selectedDayList = userListCopy.filter(workout => workout.date === day);

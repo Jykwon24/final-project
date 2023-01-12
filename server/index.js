@@ -229,3 +229,40 @@ app.use(errorMiddleware);
 app.listen(process.env.PORT, () => {
   process.stdout.write(`\n\napp listening on port ${process.env.PORT}\n\n`);
 });
+
+// app.use(authorizationMiddleware);
+
+// app.post('/api/flashcards', (req, res, next) => {
+//   const { userId } = req.user;
+//   const { question, answer } = req.body;
+//   if (!question || !answer) {
+//     throw new ClientError(400, 'question and answer are required fields');
+//   }
+//   const sql = `
+//     insert into "flashcards" ("userId", "question", "answer")
+//     values ($1, $2, $3)
+//     returning *
+//   `;
+//   const params = [userId, question, answer];
+//   db.query(sql, params)
+//     .then(result => {
+//       const [flashcard] = result.rows;
+//       res.status(201).json(flashcard);
+//     })
+//     .catch(err => next(err));
+// });
+
+// app.get('/api/flashcards', (req, res, next) => {
+//   const { userId } = req.user;
+//   const sql = `
+//     select *
+//       from "flashcards"
+//      where "userId" = $1
+//   `;
+//   const params = [userId];
+//   db.query(sql, params)
+//     .then(result => {
+//       res.json(result.rows);
+//     })
+//     .catch(err => next(err));
+// });
