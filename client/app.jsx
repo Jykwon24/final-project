@@ -39,7 +39,7 @@ const App = () => {
 
   useEffect(() => {
     async function getUserList() {
-      const response = await fetch('/api/userList/' + day);
+      const response = await fetch('/api/userList');
       const uList = await response.json();
       setUserList(uList);
     }
