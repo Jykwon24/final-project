@@ -37,16 +37,16 @@ const App = () => {
   // console.log('days:', day);
   // console.log('userList:', userList);
 
-  useEffect(() => {
-    async function getUserList() {
-      const response = await fetch('/api/userList', day);
-      const uList = await response.json();
-      setUserList(uList);
-    }
-    getUserList();
-    // .then(res => res.json())
-    // .then(retrievedList => setUserList(retrievedList));
-  }, [day]);
+  // async function getUserList() {
+  //   const response = await fetch('/api/userList');
+  //   const uList = await response.json();
+  //   setUserList(uList);
+  // }
+  // useEffect(() => {
+  //   getUserList();
+  //   // .then(res => res.json())
+  //   // .then(retrievedList => setUserList(retrievedsList));
+  // }, [setUserList]);
 
   useEffect(() => {
     // console.log('hash useeffect called');
@@ -55,7 +55,7 @@ const App = () => {
     });
   }, []);
 
-  // console.log(route);
+  // console.log(route);s
 
   useEffect(() => {
     fetch('/api/defaultList')
@@ -81,6 +81,7 @@ const App = () => {
   };
 
   const userListCopy = [...userList];
+  // console.log('userListCopy:', userListCopy);
 
   const handleAddWorkout = event => {
     if (event.target.tagName === 'BUTTON') {

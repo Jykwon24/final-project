@@ -96,7 +96,7 @@ app.get('/api/userList', (req, res, next) => {
             "date",
             "name",
             "details"
-      from "userExerciseList"
+      from "userExerciseList",
   `;
   db.query(sql)
     .then(result => {

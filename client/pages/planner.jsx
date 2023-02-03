@@ -36,18 +36,19 @@ export default function Planner(props) {
   // }, [day]);
 
   const userListCopy = [...userList];
+  // console.log(userList);
 
   const selectedDayList = userListCopy.filter(workout => workout.date === day);
 
   const handleDelete = event => {
     const databaseId = event.currentTarget.getAttribute('exerciseid');
     const bodyData = { exerciseId: databaseId };
-    const deleteTargetIndex = userListCopy.findIndex(element => element.exerciseId === Number(databaseId));
+    const deleteTargetIndex = userList.findIndex(element => element.exerciseId === Number(databaseId));
     const currentDayTargetIndex = selectedDayList.findIndex(element => element.exerciseId === Number(databaseId));
 
-    userListCopy.splice(deleteTargetIndex, 1);
+    userList.splice(deleteTargetIndex, 1);
     selectedDayList.splice(currentDayTargetIndex, 1);
-    setUserList(userListCopy);
+    setUserList(userList);
 
     const req = {
       method: 'DELETE',
