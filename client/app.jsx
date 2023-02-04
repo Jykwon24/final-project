@@ -80,7 +80,7 @@ const App = () => {
     setUser(null);
   };
 
-  const userListCopy = [...userList];
+  const userListCopy = userList;
   // console.log('userListCopy:', userListCopy);
 
   const handleAddWorkout = event => {

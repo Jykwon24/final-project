@@ -5,7 +5,7 @@ import Redirect from '../components/redirect';
 export default function Planner(props) {
   const [clicked, setClick] = useState(false);
 
-  const { user, route, userList, setUserList, day, updateTarget } = useContext(AppContext);
+  const { user, route, userList, setUserList, updateTarget } = useContext(AppContext);
 
   if (!user) {
     return <Redirect to='sign-up' />;
@@ -35,19 +35,19 @@ export default function Planner(props) {
   //   // .then(retrievedList => setUserList(retrievedList));
   // }, [day]);
 
-  const userListCopy = [...userList];
+  const userListCopy = userList;
   // console.log(userList);
 
-  const selectedDayList = userListCopy.filter(workout => workout.date === day);
+  // const selectedDayList = userListCopy.filter(workout => workout.date === day);
 
   const handleDelete = event => {
     const databaseId = event.currentTarget.getAttribute('exerciseid');
     const bodyData = { exerciseId: databaseId };
     const deleteTargetIndex = userList.findIndex(element => element.exerciseId === Number(databaseId));
-    const currentDayTargetIndex = selectedDayList.findIndex(element => element.exerciseId === Number(databaseId));
+    const currentDayTargetIndex = userListCopy.findIndex(element => element.exerciseId === Number(databaseId));
 
     userList.splice(deleteTargetIndex, 1);
-    selectedDayList.splice(currentDayTargetIndex, 1);
+    userListCopy.splice(currentDayTargetIndex, 1);
     setUserList(userList);
 
     const req = {
@@ -71,7 +71,7 @@ export default function Planner(props) {
   };
 
   return (
-    selectedDayList.map((element, index) => {
+    userListCopy.map((element, index) => {
       return (
         <div key={index} id='accordionFlush' className='accordion container accordion-flush'>
           <div className='accordion-item card'>
