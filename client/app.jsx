@@ -37,16 +37,16 @@ const App = () => {
   // console.log('days:', day);
   // console.log('userList:', userList);
 
-  // async function getUserList() {
-  //   const response = await fetch('/api/userList');
-  //   const uList = await response.json();
-  //   setUserList(uList);
-  // }
-  // useEffect(() => {
-  //   getUserList();
-  //   // .then(res => res.json())
-  //   // .then(retrievedList => setUserList(retrievedsList));
-  // }, [setUserList]);
+  async function getUserList() {
+    const response = await fetch('/api/userList');
+    const uList = await response.json();
+    setUserList(uList);
+  }
+  useEffect(() => {
+    getUserList();
+    // .then(res => res.json())
+    // .then(retrievedList => setUserList(retrievedsList));
+  }, [setUserList]);
 
   useEffect(() => {
     // console.log('hash useeffect called');

@@ -96,11 +96,11 @@ app.get('/api/userList', (req, res, next) => {
             "date",
             "name",
             "details"
-      from "userExerciseList",
+      from "userExerciseList"
   `;
   db.query(sql)
     .then(result => {
-      res.status(200).json(result.rows);
+      res.status(200).json(result.rows[0]);
     })
     .catch(err => next(err));
 });
