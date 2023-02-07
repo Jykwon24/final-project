@@ -40,7 +40,7 @@ const App = () => {
   async function getUserList() {
     const response = await fetch('/api/userList');
     const uList = await response.json();
-    setUserList(uList);
+    setUserList([uList]);
   }
   useEffect(() => {
     getUserList();
@@ -55,7 +55,7 @@ const App = () => {
     });
   }, []);
 
-  // console.log(route);s
+  // console.log(route);
 
   useEffect(() => {
     fetch('/api/defaultList')
