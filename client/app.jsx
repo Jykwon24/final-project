@@ -38,7 +38,7 @@ const App = () => {
   // console.log('userList:', userList);
 
   async function getUserList() {
-    const response = await fetch('/api/userList');
+    const response = await fetch('/api/userList/:' + `${day}`);
     const uList = await response.json();
     setUserList([uList]);
   }
@@ -46,7 +46,7 @@ const App = () => {
     getUserList();
     // .then(res => res.json())
     // .then(retrievedList => setUserList(retrievedsList));
-  }, [setUserList]);
+  }, [day]);
 
   useEffect(() => {
     // console.log('hash useeffect called');
