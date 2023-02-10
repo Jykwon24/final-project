@@ -86,11 +86,13 @@ app.post('/api/auth/sign-in', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.get('/api/userList', (req, res, next) => {
+app.get('/api/userList/:day', (req, res, next) => {
   // const userId = Number(req.params.userId);
   // if (!Number.isInteger(userId) || userId < 1) {
   //   throw new ClientError(400, 'userId must be a positive integer');
   // }
+  // const day = req.params;
+  // console.log(day);
   const sql = `
      select "exerciseId",
             "date",
