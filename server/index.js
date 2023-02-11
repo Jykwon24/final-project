@@ -91,16 +91,17 @@ app.get('/api/userList/:day', (req, res, next) => {
   // if (!Number.isInteger(userId) || userId < 1) {
   //   throw new ClientError(400, 'userId must be a positive integer');
   // }
-  // const day = req.params;
+  const { day } = req.params;
   // console.log(day);
   const sql = `
      select "exerciseId",
-            "date",
             "name",
             "details"
       from "userExerciseList"
+      where "date" = $1
   `;
-  db.query(sql)
+  const params = [day];
+  db.query(sql, params)
     .then(result => {
       res.status(200).json(result.rows[0]);
     })
