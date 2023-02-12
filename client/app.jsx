@@ -40,8 +40,10 @@ const App = () => {
   async function getUserList() {
     const response = await fetch('/api/userList/' + `${day}`);
     const uList = await response.json();
+    // console.log(uList);
     setUserList([uList]);
   }
+
   useEffect(() => {
     getUserList();
     // .then(res => res.json())

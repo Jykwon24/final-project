@@ -70,6 +70,37 @@ export default function Planner(props) {
     setClick(!clicked);
   };
 
+  // return (
+  //   userListCopy.map((element, index) => {
+  //     return (
+  //       <div key={index} id='accordionFlush' className='accordion container accordion-flush'>
+  //         <div className='accordion-item card'>
+  //           <div className='d-flex justify-content-between' id={`flush-heading${index}`} >
+  //             <div className='collapsed text-black flex-fill card-header' data-bs-toggle='collapse' data-bs-target={`#flush-collapse${index}`} aria-expanded='true' aria-controls={`flush-collapse${index}`}>
+  //               <h5>
+  //                 {element.name}
+  //               </h5>
+  //             </div>
+  //             <div className='card-header'>
+  //               <i id={index} exerciseid={element.exerciseId} onClick={updateTarget} className='fa-solid fa-pen-to-square fs-3'></i>
+  //               <i id={index} exerciseid={element.exerciseId} onClick={handleDelete} className='fa-solid fa-xmark ms-2 fs-3'></i>
+  //             </div>
+  //           </div>
+  //           <div id={`flush-collapse${index}`} className='collapse' aria-labelledby={`flush-heading${index}`} data-parent='#accordionFlush'>
+  //            <div>
+  //             {element.details}
+  //            </div>
+  //           </div>
+  //         </div>
+  //       </div>
+
+  //     );
+
+  //   })
+  // );
+
+  // console.log('inside planner:', userListCopy);
+
   return (
     userListCopy.map((element, index) => {
       return (
@@ -87,9 +118,9 @@ export default function Planner(props) {
               </div>
             </div>
             <div id={`flush-collapse${index}`} className='collapse' aria-labelledby={`flush-heading${index}`} data-parent='#accordionFlush'>
-             <div>
-              {element.details}
-             </div>
+              <div>
+                {element.details}
+              </div>
             </div>
           </div>
         </div>

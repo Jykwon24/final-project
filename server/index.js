@@ -92,18 +92,20 @@ app.get('/api/userList/:day', (req, res, next) => {
   //   throw new ClientError(400, 'userId must be a positive integer');
   // }
   const { day } = req.params;
-  // console.log(day);
   const sql = `
-     select "exerciseId",
-            "name",
-            "details"
-      from "userExerciseList"
-      where "date" = $1
+  select "exerciseId",
+  "name",
+  "details"
+  from "userExerciseList"
+  where "date" = $1
   `;
-  const params = [day];
+  const params = [Number(day)];
+
+  // console.log(params);
   db.query(sql, params)
     .then(result => {
-      res.status(200).json(result.rows[0]);
+      // console.log(result);
+      res.status(200).json(result.rows);
     })
     .catch(err => next(err));
 });
