@@ -91,6 +91,7 @@ app.get('/api/userList/:day', (req, res, next) => {
   // if (!Number.isInteger(userId) || userId < 1) {
   //   throw new ClientError(400, 'userId must be a positive integer');
   // }
+  // console.log(req.headers);
   const { day } = req.params;
   const sql = `
   select "exerciseId",

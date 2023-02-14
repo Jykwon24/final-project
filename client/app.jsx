@@ -38,10 +38,14 @@ const App = () => {
   // console.log('userList:', userList);
 
   async function getUserList() {
-    const response = await fetch('/api/userList/' + `${day}`);
+    const response = await fetch('/api/userList/' + `${day}`, {
+      headers: {
+        authorization: localStorage.getItem('user-Id')
+      }
+    });
     const uList = await response.json();
     // console.log(uList);
-    setUserList([uList]);
+    setUserList(uList);
   }
 
   useEffect(() => {
