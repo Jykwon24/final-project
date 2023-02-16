@@ -39,6 +39,7 @@ export const CustomWorkoutForm = () => {
   };
 
   // console.log('in workout form:', targetExercise);
+  // console.log('in workout form, userlist:', userListCopy);
 
   const handleUpdate = event => {
     event.preventDefault();
