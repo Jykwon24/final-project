@@ -141,7 +141,7 @@ export const CustomWorkoutForm = () => {
               </div>
             : <>
                 <button type='submit'> Update workout </button>
-                <button> Back </button>
+                <button type='button'> Back </button>
             </>
             }
         </div>
