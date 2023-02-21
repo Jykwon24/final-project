@@ -8,7 +8,12 @@ export const CustomWorkoutForm = () => {
 
   const { user, day, setUserList, userList, targetExercise, view } = useContext(AppContext);
 
+  // console.log('targetExercise:', targetExercise);
+  // console.log('view:', view);
+
   const userListCopy = userList;
+  // console.log('workoutName:', workoutName);
+  // console.log('details:', details);
 
   const customSubmit = event => {
     event.preventDefault();

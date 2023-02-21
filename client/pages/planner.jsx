@@ -5,7 +5,7 @@ import Redirect from '../components/redirect';
 export default function Planner(props) {
   const [clicked, setClick] = useState(false);
 
-  const { user, route, userList, setUserList, updateTarget } = useContext(AppContext);
+  const { user, route, userList, setUserList, setTarget, setView } = useContext(AppContext);
 
   if (!user) {
     return <Redirect to='sign-up' />;
@@ -39,6 +39,20 @@ export default function Planner(props) {
   // console.log(userList);
 
   // const selectedDayList = userListCopy.filter(workout => workout.date === day);
+
+  const updateTarget = event => {
+    const databaseId = event.currentTarget.getAttribute('exerciseid');
+
+    // console.log('shallow copy of list:', userListCopy);
+    // console.log('exercise iD in database:', databaseId);
+
+    const editTargetIndex = userListCopy.findIndex(element => element.exerciseId === Number(databaseId));
+    // console.log(userListCopy[editTargetIndex]);
+    setTarget(userListCopy[editTargetIndex]);
+    setView('update');
+
+    window.location.hash = 'custom-workout';
+  };
 
   const handleDelete = event => {
     const databaseId = event.currentTarget.getAttribute('exerciseid');

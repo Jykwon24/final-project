@@ -120,19 +120,19 @@ const App = () => {
 
   // console.log('userList:', userList);
 
-  const updateTarget = event => {
-    const databaseId = event.currentTarget.getAttribute('exerciseid');
+  // const updateTarget = event => {
+  //   const databaseId = event.currentTarget.getAttribute('exerciseid');
 
-    // console.log('shallow copy of list:', userListCopy);
-    // console.log('exercise iD in databes:', databaseId);
+  //   console.log('shallow copy of list:', userListCopy);
+  //   console.log('exercise iD in database:', databaseId);
 
-    const editTargetIndex = userListCopy.findIndex(element => element.exerciseId === Number(databaseId));
-    // console.log(userListCopy[editTargetIndex]);
-    setTarget(userListCopy[editTargetIndex]);
-    setView('update');
+  //   const editTargetIndex = userListCopy.findIndex(element => element.exerciseId === Number(databaseId));
+  //   // console.log(userListCopy[editTargetIndex]);
+  //   setTarget(userListCopy[editTargetIndex]);
+  //   setView('update');
 
-    window.location.hash = 'custom-workout';
-  };
+  //   window.location.hash = 'custom-workout';
+  // };
 
   const renderPage = () => {
     // console.log('renderpage', route);
@@ -182,7 +182,6 @@ const App = () => {
     isAuthorizing,
     handleSignIn,
     handleAddWorkout,
-    updateTarget,
     targetExercise,
     setTarget,
     setUserList
