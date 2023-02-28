@@ -3,10 +3,10 @@ import { AppContext } from '../../app';
 import Button from 'react-bootstrap/Button';
 
 export const CustomWorkoutForm = () => {
-  const [workoutName, setWorkoutName] = useState('');
-  const [details, setDetails] = useState('');
-
   const { user, day, setUserList, userList, targetExercise, view } = useContext(AppContext);
+
+  const [workoutName, setWorkoutName] = useState(targetExercise.name);
+  const [details, setDetails] = useState(targetExercise.details);
 
   // console.log('targetExercise:', targetExercise);
   // console.log('view:', view);
