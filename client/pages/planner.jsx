@@ -1,11 +1,28 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { AppContext } from '../app';
 import Redirect from '../components/redirect';
 
 export default function Planner(props) {
   const [clicked, setClick] = useState(false);
 
-  const { user, route, userList, setUserList, setTarget, setView } = useContext(AppContext);
+  const { day, user, route, userList, setUserList, setTarget, setView } = useContext(AppContext);
+
+  async function getUserList() {
+    const response = await fetch('/api/userList/' + `${day}`, {
+      headers: {
+        authorization: localStorage.getItem('user-Id')
+      }
+    });
+    const uList = await response.json();
+    // console.log(uList);
+    setUserList(uList);
+  }
+
+  useEffect(() => {
+    getUserList();
+    // .then(res => res.json())
+    // .then(retrievedList => setUserList(retrievedsList));
+  }, [day]);
 
   if (!user) {
     return <Redirect to='sign-up' />;

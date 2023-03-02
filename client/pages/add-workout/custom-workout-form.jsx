@@ -3,7 +3,7 @@ import { AppContext } from '../../app';
 import Button from 'react-bootstrap/Button';
 
 export const CustomWorkoutForm = () => {
-  const { user, day, setUserList, userList, targetExercise, view } = useContext(AppContext);
+  const { user, day, setUserList, userList, targetExercise, view, setDay } = useContext(AppContext);
 
   const [workoutName, setWorkoutName] = useState(targetExercise.name);
   const [details, setDetails] = useState(targetExercise.details);
@@ -41,6 +41,7 @@ export const CustomWorkoutForm = () => {
       .catch(err => console.error(err));
 
     window.location.hash = day;
+
   };
 
   // console.log('in workout form:', targetExercise);
@@ -145,7 +146,7 @@ export const CustomWorkoutForm = () => {
                 </Button>
               </div>
             : <>
-                <button type='submit'> Update workout </button>
+                <button type='submit' onClick={setDay(day)}> Update workout </button>
                 <button type='button'> Back </button>
             </>
             }
