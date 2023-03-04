@@ -7,6 +7,8 @@ export default function Planner(props) {
 
   const { day, user, route, userList, setUserList, setTarget, setView } = useContext(AppContext);
 
+  const userListCopy = userList;
+
   async function getUserList() {
     const response = await fetch('/api/userList/' + `${day}`, {
       headers: {
@@ -34,6 +36,12 @@ export default function Planner(props) {
     );
   }
 
+  if (!userListCopy) {
+    return (
+      <div>No workouts added for this day, create or add from list to track your fitness journey!</div>
+    );
+  }
+
   // async function getUserList() {
   //   const req = {
   //     method: 'GET',
@@ -52,7 +60,6 @@ export default function Planner(props) {
   //   // .then(retrievedList => setUserList(retrievedList));
   // }, [day]);
 
-  const userListCopy = userList;
   // console.log(userList);
 
   // const selectedDayList = userListCopy.filter(workout => workout.date === day);
