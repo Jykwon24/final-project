@@ -36,9 +36,11 @@ export default function Planner(props) {
     );
   }
 
-  if (!userListCopy) {
+  if (userListCopy.length === 0) {
     return (
-      <div>No workouts added for this day, create or add from list to track your fitness journey!</div>
+      <div className='container'>
+        <div className='d-flex justify-content-center empty-list-style'>List is empty! Create or add from list to track your fitness journey!</div>
+      </div>
     );
   }
 
@@ -137,7 +139,7 @@ export default function Planner(props) {
   //   })
   // );
 
-  // console.log('inside planner:', userListCopy);
+  // console.log('inside planner:', userListCopy)
 
   return (
     userListCopy.map((element, index) => {

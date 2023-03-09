@@ -190,3 +190,7 @@
   width: 79px;
   text-align: end;
 }
+
+.empty-list-style {
+  color: rgb(211, 213, 216);
+}
