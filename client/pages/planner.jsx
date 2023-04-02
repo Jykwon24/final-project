@@ -39,7 +39,11 @@ export default function Planner(props) {
   if (userListCopy.length === 0) {
     return (
       <div className='container'>
-        <div className='d-flex justify-content-center empty-list-style'><span className='text-grey'>List is empty!</span> Create or add from list to track your fitness journey!</div>
+        <div className='empty-list-style'>
+          <div className='d-flex justify-content-center'>
+            <p className='text-secondary'>List is empty!</p>
+          </div>
+          <p>Create or add from list to track your fitness journey!</p></div>
       </div>
     );
   }
