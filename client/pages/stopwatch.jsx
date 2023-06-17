@@ -63,7 +63,7 @@ export const Stopwatch = () => {
         </div>
         <div className='d-flex mt-4'>
           <div className='mx-auto'>
-             <a className='link-style-stopwatch' href="#set-timer">Go to Set Timer</a>
+             <a className='link-style-stopwatch' href="#set-timer">To Set Timer</a>
           </div>
         </div>
 
