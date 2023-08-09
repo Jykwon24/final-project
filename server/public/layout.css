@@ -52,6 +52,11 @@ textarea {
   border-radius: 10px;
 }
 
+.timer-box {
+  border: 1px solid white;
+  border-radius: 5px;
+}
+
 .timer-text {
   margin-top: 2rem;
   min-height: 2rem;

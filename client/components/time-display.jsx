@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
 export const TimeDisplay = props => {
+  const styles = {
+    page: {
+      minWidth: '198px'
+    },
+    center: {
+      marginLeft: '8px'
+    }
+  };
 
   // const [currentSeconds, setCurrent] = useState(0);
   const { current } = props;
@@ -17,7 +25,12 @@ export const TimeDisplay = props => {
   return (
     <div>
       <div>
-        <h1 className='timer-font'>{(`0${mins}`).slice(-2)}:{(`0${seconds}`).slice(-2)}</h1>
+        <h1 className='timer-font timer-box' style={styles.page}>
+          <div style={styles.center}>
+           <span>{(`0${mins}`).slice(-2)}:</span>
+           <span>{(`0${seconds}`).slice(-2)}</span>
+          </div>
+        </h1>
       </div>
     </div>
   );
