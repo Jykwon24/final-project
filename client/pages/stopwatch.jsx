@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 export const Stopwatch = () => {
   const [time, setTime] = useState(0);
   const [start, setStart] = useState(false);
-  // const [lap, setLap] = useState(false);
 
   const startTimer = () => {
     setStart(true);
@@ -12,11 +11,6 @@ export const Stopwatch = () => {
   const stopTimer = () => {
     setStart(false);
   };
-
-  // const showLap = () => {
-  //   setLap(true);
-  //   setStart(false);
-  // };
 
   useEffect(() => {
     let interval = null;
@@ -52,7 +46,6 @@ export const Stopwatch = () => {
         start
           ? <>
               <div className='stop-watch-stop' onClick={stopTimer}></div>
-              {/* <button onClick={showLap}>Lap</button> */}
             </>
           : <>
               <i className='fa-regular fa-square-caret-right fs-1 stop-watch-start' onClick={startTimer}></i>
