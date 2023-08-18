@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 export const CustomWorkoutForm = () => {
   const { user, day, setUserList, userList, targetExercise, view, setDay } = useContext(AppContext);
 
-  const [workoutName, setWorkoutName] = useState(targetExercise.name);
+  const [workoutName, setWorkoutName] = useState(targetExercise);
   const [details, setDetails] = useState(targetExercise.details);
 
   // console.log('targetExercise:', targetExercise);

@@ -30,7 +30,6 @@ export const Stopwatch = () => {
   const milliseconds = ('0' + ((time / 10) % 100)).slice(-2);
   return (
     <>
-    <div>
       <div className='d-flex mt-4'>
           <div className='mx-auto stop-watch'>
             <div>
@@ -59,8 +58,6 @@ export const Stopwatch = () => {
              <a className='link-style-stopwatch' href="#set-timer">To Set Timer</a>
           </div>
         </div>
-
-    </div>
     </>
   );
 };

@@ -10,11 +10,13 @@ export default function Planner(props) {
   const userListCopy = userList;
 
   async function getUserList() {
-    const response = await fetch('/api/userList/' + `${day}`, {
-      headers: {
-        authorization: localStorage.getItem('user-Id')
+    const response = await fetch('/api/userList/' + `${day}`
+      , {
+        headers: {
+          authorization: localStorage.getItem('user-Id')
+        }
       }
-    });
+    );
     const uList = await response.json();
     // console.log(uList);
     setUserList(uList);
@@ -67,6 +69,7 @@ export default function Planner(props) {
   // }, [day]);
 
   // console.log(userList);
+  // console.log('copy of userList:', userListCopy);
 
   // const selectedDayList = userListCopy.filter(workout => workout.date === day);
 
@@ -147,8 +150,9 @@ export default function Planner(props) {
 
   return (
     userListCopy.map((element, index) => {
+      // console.log(element);
       return (
-        <div key={index} id='accordionFlush' className='accordion container accordion-flush'>
+        <main key={index} id='accordionFlush' className='accordion container accordion-flush'>
           <div className='accordion-item card'>
             <div className='d-flex justify-content-between' id={`flush-heading${index}`} >
               <div className='collapsed text-black flex-fill card-header' data-bs-toggle='collapse' data-bs-target={`#flush-collapse${index}`} aria-expanded='true' aria-controls={`flush-collapse${index}`}>
@@ -167,7 +171,7 @@ export default function Planner(props) {
               </div>
             </div>
           </div>
-        </div>
+        </main>
 
       );
 
